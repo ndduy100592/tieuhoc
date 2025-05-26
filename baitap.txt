@@ -1,0 +1,48 @@
+#toan
+Bài 1: Giải phương trình 2x + 5 = 15.
+Bài 2: Một hình chữ nhật có chiều dài 8cm và chiều rộng 5cm. Tính diện tích của hình chữ nhật đó.
+Bài 3: Tính: 123 + 456 = ?
+Bài 4: Lan có 20 viên bi, An có nhiều hơn Lan 5 viên bi. Hỏi An có bao nhiêu viên bi?
+Bài 5: Tìm số liền sau của 99.
+
+#tieng-viet
+Bài 1: Gạch chân các động từ trong câu sau: "Chim hót líu lo trên cành cây."
+Bài 2: Đặt câu với từ "chăm chỉ".
+Bài 3: Tìm các từ trái nghĩa với "cao".
+Bài 4: Kể về một chuyến đi chơi của em (3-5 câu).
+Bài 5: Viết 2 câu tả con chó nhà em.
+
+#tieng-anh
+Bài 1: What is your name?
+Bài 2: How old are you?
+Bài 3: Spell the word "apple".
+Bài 4: Complete the sentence: "I like to eat _______." (fruits/vegetables/candy)
+Bài 5: Translate to English: "Tôi yêu Việt Nam."
+
+#tin-hoc
+Bài 1: Kể tên 3 thiết bị đầu vào của máy tính.
+Bài 2: Nút nào trên bàn phím dùng để viết hoa chữ cái?
+Bài 3: Làm thế nào để mở một chương trình trên máy tính?
+Bài 4: Kể tên một số phần mềm vẽ tranh mà em biết.
+Bài 5: Biểu tượng của thư mục trông như thế nào?
+
+#cong-nghe
+Bài 1: Nêu công dụng của cái thìa.
+Bài 2: Kể tên 3 loại rau củ.
+Bài 3: Tại sao chúng ta cần uống đủ nước?
+Bài 4: Làm thế nào để giữ vệ sinh nhà cửa?
+Bài 5: Kể tên một số đồ dùng học tập của em.
+
+#lich-su-dia-ly
+Bài 1: Kể tên một danh lam thắng cảnh ở Việt Nam.
+Bài 2: Dân tộc Việt Nam có bao nhiêu nhóm dân tộc anh em?
+Bài 3: Hồ Gươm nằm ở đâu?
+Bài 4: Kể tên một số lễ hội truyền thống của Việt Nam.
+Bài 5: Việt Nam có hình dạng gì trên bản đồ?
+
+#khoa-hoc
+Bài 1: Kể tên 3 hành tinh trong hệ mặt trời.
+Bài 2: Tại sao trời lại mưa?
+Bài 3: Nêu tên ba loại chất lỏng thường dùng.
+Bài 4: Kể tên các giai đoạn phát triển của cây.
+Bài 5: Tại sao chúng ta cần hít thở không khí?

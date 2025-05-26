@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot học tập trường TH Thượng Ấm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #e0f7fa;
+            color: #333;
+            overflow: hidden;
+        }
+
+        #home-menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 20px;
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        #home-menu h1 {
+            color: #26a69a;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .subject-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            width: 80%;
+            max-width: 900px;
+        }
+
+        .subject-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .subject-button i {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subject-button:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+        }
+
+        #chatbot-container {
+            display: none;
+            flex-grow: 1;
+            flex-direction: row;
+            overflow: hidden;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        #sidebar {
+            width: 200px;
+            background-color: #f0f4c3;
+            padding: 15px;
+            border-right: 1px solid #dce775;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset -2px 0 5px rgba(0,0,0,0.05);
+        }
+
+        #sidebar h3 {
+            color: #689f38;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar-button {
+            background-color: #c5e1a5;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 10px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-button i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .sidebar-button.active, .sidebar-button:hover {
+            background-color: #8bc34a;
+            color: white;
+            transform: translateX(3px);
+        }
+
+        .chat-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #khung-tro-chuyen {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            border-bottom: 1px solid #b2ebf2;
+            background-color: #ffffff;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tin-nhan {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 75%;
+            position: relative;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .tin-nhan-nguoi-dung {
+            background-color: #007bff;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+            border-bottom-right-radius: 5px;
+        }
+
+        .tin-nhan-bot {
+            background-color: #e3f2fd;
+            color: #212121;
+            margin-right: auto;
+            text-align: left;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        #khu-vuc-nhap {
+            display: flex;
+            padding: 15px;
+            background-color: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+            align-items: center;
+        }
+
+        #o-nhap-tin-nhan {
+            flex-grow: 1;
+            padding: 12px 18px;
+            border: 1px solid #c5e1a5;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        #o-nhap-tin-nhan:focus {
+            border-color: #8bc34a;
+            box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.2);
+        }
+
+        #nut-gui {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            margin-left: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        #nut-gui:hover {
+            background-color: #45a049;
+        }
+
+        #nut-gui:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            #home-menu {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            #home-menu h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            .subject-buttons {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 15px;
+                width: 95%;
+            }
+
+            .subject-button {
+                padding: 15px;
+                font-size: 1em;
+            }
+
+            .subject-button i {
+                font-size: 2em;
+                margin-bottom: 8px;
+            }
+
+            #chatbot-container {
+                flex-direction: column;
+                margin: 10px;
+                border-radius: 8px;
+            }
+
+            #sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #dce775;
+                padding: 10px;
+                box-shadow: inset 0 -2px 5px rgba(0,0,0,0.05);
+                flex-direction: row;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            #sidebar h3 {
+                display: none;
+            }
+
+            .sidebar-button {
+                flex-shrink: 0;
+                width: auto;
+                margin-bottom: 0;
+                margin-right: 10px;
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+
+            .sidebar-button i {
+                font-size: 1em;
+                margin-right: 5px;
+            }
+
+            .chat-area {
+                min-height: 0;
+            }
+
+            #khung-tro-chuyen {
+                padding: 10px;
+            }
+
+            .tin-nhan {
+                max-width: 85%;
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+
+            #khu-vuc-nhap {
+                padding: 10px;
+            }
+
+            #o-nhap-tin-nhan {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            #nut-gui {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="home-menu">
+        <h1>Chatbot học tập trường TH Thượng Ấm</h1>
+        <div class="subject-buttons">
+            <button class="subject-button" data-subject="toan">
+                <i class="fas fa-calculator"></i>
+                Toán
+            </button>
+            <button class="subject-button" data-subject="tieng-viet">
+                <i class="fas fa-book-open"></i>
+                Tiếng Việt
+            </button>
+            <button class="subject-button" data-subject="tieng-anh">
+                <i class="fas fa-globe"></i>
+                Tiếng Anh
+            </button>
+            <button class="subject-button" data-subject="tin-hoc">
+                <i class="fas fa-laptop-code"></i>
+                Tin Học
+            </button>
+            <button class="subject-button" data-subject="cong-nghe">
+                <i class="fas fa-tools"></i>
+                Công Nghệ
+            </button>
+            <button class="subject-button" data-subject="lich-su-dia-ly">
+                <i class="fas fa-map-marked-alt"></i>
+                Lịch Sử & Địa Lý
+            </button>
+            <button class="subject-button" data-subject="khoa-hoc">
+                <i class="fas fa-flask"></i>
+                Khoa Học
+            </button>
+        </div>
+    </div>
+
+    <div id="chatbot-container">
+        <div id="sidebar">
+            <h3>Môn học</h3>
+            <button class="sidebar-button" data-subject="toan">
+                <i class="fas fa-calculator"></i>
+                Toán
+            </button>
+            <button class="sidebar-button" data-subject="tieng-viet">
+                <i class="fas fa-book-open"></i>
+                Tiếng Việt
+            </button>
+            <button class="sidebar-button" data-subject="tieng-anh">
+                <i class="fas fa-globe"></i>
+                Tiếng Anh
+            </button>
+            <button class="sidebar-button" data-subject="tin-hoc">
+                <i class="fas fa-laptop-code"></i>
+                Tin Học
+            </button>
+            <button class="sidebar-button" data-subject="cong-nghe">
+                <i class="fas fa-tools"></i>
+                Công Nghệ
+            </button>
+            <button class="sidebar-button" data-subject="lich-su-dia-ly">
+                <i class="fas fa-map-marked-alt"></i>
+                Lịch Sử & Địa Lý
+            </button>
+            <button class="sidebar-button" data-subject="khoa-hoc">
+                <i class="fas fa-flask"></i>
+                Khoa Học
+            </button>
+        </div>
+        <div class="chat-area">
+            <div id="khung-tro-chuyen">
+            </div>
+            <div id="khu-vuc-nhap">
+                <input type="text" id="o-nhap-tin-nhan" placeholder="Hỏi tôi điều gì đó...">
+                <button id="nut-gui">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "@google/generative-ai": "https://esm.run/@google/generative-ai"
+            }
+        }
+    </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // Thay thế "YOUR_API_KEY" bằng khóa API thực tế của bạn
+        const KHOA_API = "AIzaSyAn9dMMM5u8dEGpI8mEzQvdMSuI8KFH8jM"; 
+        const moHinhAI = new GoogleGenerativeAI(KHOA_API);
+        const moHinh = moHinhAI.getGenerativeModel({ model: "gemini-2.0-flash-thinking-exp-01-21" });
+
+        const homeMenu = document.getElementById('home-menu');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const khungTroChuyen = document.getElementById('khung-tro-chuyen');
+        const oNhapTinNhan = document.getElementById('o-nhap-tin-nhan');
+        const nutGui = document.getElementById('nut-gui');
+        const subjectButtons = document.querySelectorAll('.subject-button');
+        const sidebarButtons = document.querySelectorAll('.sidebar-button');
+
+        let currentSubject = '';
+        let homeworkData = {}; // Đối tượng để lưu trữ dữ liệu bài tập từ baitap.txt
+
+        // Định nghĩa các môn học và bộ lọc
+        const subjectFilters = {
+            "toan": {
+                name: "Toán",
+                excludeKeywords: ["đại số tuyến tính", "giải tích", "lượng tử", "phân tích chuyên sâu"],
+                homeworkExamples: [] // Sẽ được điền từ baitap.txt
+            },
+            "tieng-viet": {
+                name: "Tiếng Việt",
+                excludeKeywords: ["nghiên cứu văn học", "phân tích chuyên sâu", "triết học", "ngữ pháp nâng cao", "phản biện văn học"],
+                homeworkExamples: []
+            },
+            "tieng-anh": {
+                name: "Tiếng Anh",
+                excludeKeywords: ["advanced grammar", "literary analysis", "linguistics", "academic writing", "syntax"],
+                homeworkExamples: []
+            },
+            "tin-hoc": {
+                name: "Tin Học",
+                excludeKeywords: ["lập trình", "trí tuệ nhân tạo", "máy học", "công nghệ thông tin chuyên sâu", "thuật toán phức tạp", "mạng máy tính"],
+                homeworkExamples: []
+            },
+            "cong-nghe": {
+                name: "Công Nghệ",
+                excludeKeywords: ["kỹ thuật", "công nghệ cao", "tự động hóa", "robotics", "thiết kế mạch", "vật liệu mới"],
+                homeworkExamples: []
+            },
+            "lich-su-dia-ly": {
+                name: "Lịch Sử & Địa Lý",
+                excludeKeywords: ["nghiên cứu sử học", "phân tích địa chính trị", "kinh tế học", "xã hội học", "diễn biến phức tạp", "lý thuyết địa lý"],
+                homeworkExamples: []
+            },
+            "khoa-hoc": {
+                name: "Khoa Học",
+                excludeKeywords: ["vật lý lượng tử", "hóa học hữu cơ", "sinh học phân tử", "thiên văn học", "di truyền học", "nghiên cứu khoa học chuyên sâu"],
+                homeworkExamples: []
+            }
+        };
+
+        const generalExcludeKeywords = [
+            "đại học", "cao học", "nghiên cứu", "phân tích chuyên sâu", "vật lý hạt nhân", "triết học",
+            "kinh tế vĩ mô", "chính trị quốc tế", "chứng minh", "phản biện", "tôn giáo", "đức tin"
+        ];
+        // Các cụm từ người dùng có thể dùng để yêu cầu bài tập
+        const homeworkRequestPhrases = /(cho (tôi|em) bài tập|xin bài tập|gợi ý bài tập|bài tập về)/;
+
+
+        // Hàm để tải và phân tích dữ liệu bài tập từ baitap.txt
+        async function loadHomeworkData() {
+            try {
+                const response = await fetch('baitap.txt');
+                if (!response.ok) {
+                    throw new Error(`Lỗi HTTP! status: ${response.status}`);
+                }
+                const text = await response.text();
+                // Tách các dòng, loại bỏ khoảng trắng và dòng trống
+                const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+
+                let currentSection = '';
+                for (const line of lines) {
+                    if (line.startsWith('#')) {
+                        currentSection = line.substring(1); // Lấy khóa môn học (vd: "toan")
+                        homeworkData[currentSection] = []; // Khởi tạo mảng rỗng cho môn học này
+                    } else if (currentSection && homeworkData[currentSection]) {
+                        homeworkData[currentSection].push(line); // Thêm bài tập vào môn học hiện tại
+                    }
+                }
+                // Điền dữ liệu bài tập đã tải vào subjectFilters
+                for (const subjectKey in homeworkData) {
+                    if (subjectFilters[subjectKey]) {
+                        subjectFilters[subjectKey].homeworkExamples = homeworkData[subjectKey];
+                    }
+                }
+                console.log("Dữ liệu bài tập đã tải:", homeworkData);
+            } catch (error) {
+                console.error("Không thể tải dữ liệu bài tập:", error);
+                // Đặt lại homeworkExamples thành rỗng nếu có lỗi
+                for (const key in subjectFilters) {
+                    subjectFilters[key].homeworkExamples = [];
+                }
+            }
+        }
+
+        // Tải dữ liệu bài tập khi script bắt đầu
+        loadHomeworkData();
+
+
+        // Gán sự kiện cho các nút chọn môn học ở trang chủ
+        subjectButtons.forEach(button => {
+            button.addEventListener('click', () => selectSubject(button.dataset.subject));
+        });
+
+        // Gán sự kiện cho các nút chọn môn học ở thanh sidebar
+        sidebarButtons.forEach(button => {
+            button.addEventListener('click', () => selectSubject(button.dataset.subject));
+        });
+
+        // Gán sự kiện cho nút gửi tin nhắn
+        nutGui.addEventListener('click', guiTinNhan);
+        // Gán sự kiện cho phím Enter trong ô nhập tin nhắn
+        oNhapTinNhan.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                guiTinNhan();
+            }
+        });
+
+        /**
+         * Chuyển đổi giữa menu chọn môn học và giao diện chatbot.
+         * Đặt môn học hiện tại và hiển thị lời chào.
+         * @param {string} subject - Khóa của môn học được chọn (vd: "toan").
+         */
+        function selectSubject(subject) {
+            currentSubject = subject;
+            homeMenu.style.display = 'none';
+            chatbotContainer.style.display = 'flex';
+            khungTroChuyen.innerHTML = ''; // Xóa tin nhắn cũ khi đổi môn
+            themTinNhanVaoGiaoDien("bot", `Chào mừng bạn đến với môn ${subjectFilters[subject].name}! Tôi có thể giúp gì cho bạn?`);
+
+            // Đặt trạng thái 'active' cho nút sidebar tương ứng
+            sidebarButtons.forEach(button => {
+                if (button.dataset.subject === subject) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
+        /**
+         * Thêm tin nhắn vào giao diện trò chuyện.
+         * @param {string} nguoiGui - Người gửi tin nhắn ("nguoi-dung" hoặc "bot").
+         * @param {string} vanBan - Nội dung tin nhắn.
+         */
+        function themTinNhanVaoGiaoDien(nguoiGui, vanBan) {
+            const divTinNhan = document.createElement('div');
+            divTinNhan.classList.add('tin-nhan', `tin-nhan-${nguoiGui}`);
+
+            // Chuyển đổi định dạng markdown cơ bản (in đậm, xuống dòng)
+            let formattedText = vanBan.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            formattedText = formattedText.replace(/\n/g, '<br>');
+
+            divTinNhan.innerHTML = formattedText;
+            khungTroChuyen.appendChild(divTinNhan);
+            // Cuộn xuống cuối khung trò chuyện
+            khungTroChuyen.scrollTop = khungTroChuyen.scrollHeight;
+        }
+
+        /**
+         * Xử lý gửi tin nhắn của người dùng và nhận phản hồi từ bot.
+         */
+        async function guiTinNhan() {
+            const tinNhanNguoiDung = oNhapTinNhan.value.trim();
+            if (!tinNhanNguoiDung) return; // Không làm gì nếu tin nhắn rỗng
+
+            themTinNhanVaoGiaoDien("nguoi-dung", tinNhanNguoiDung);
+            oNhapTinNhan.value = ''; // Xóa nội dung trong ô nhập liệu
+
+            // Xử lý lời chào đơn giản
+            const loiChao = ["chào", "hello", "hi"];
+            if (loiChao.some(chao => tinNhanNguoiDung.toLowerCase().includes(chao))) {
+                themTinNhanVaoGiaoDien("bot", `Chào bạn! Tôi là một chatbot AI được thiết kế để trả lời các câu hỏi cấp tiểu học cho môn ${subjectFilters[currentSubject].name}. Bạn có câu hỏi gì không?`);
+                return;
+            }
+
+            // --- LOGIC XỬ LÝ YÊU CẦU BÀI TẬP TỪ baitap.txt ---
+            const isAskingForHomework = homeworkRequestPhrases.test(tinNhanNguoiDung.toLowerCase());
+
+            if (isAskingForHomework) {
+                if (currentSubject && subjectFilters[currentSubject] && subjectFilters[currentSubject].homeworkExamples.length > 0) {
+                    let examples = subjectFilters[currentSubject].homeworkExamples.map(e => `- ${e}`).join('\n');
+                    themTinNhanVaoGiaoDien("bot", `Chào bạn! Thầy có một vài dạng bài tập cơ bản mà em có thể tham khảo trong môn **${subjectFilters[currentSubject].name}** đây:\n${examples}\n\nEm hãy thử giải các bài tập này và hỏi thầy nếu có bất kỳ câu hỏi nào về cách làm nhé!`);
+                } else {
+                    themTinNhanVaoGiaoDien("bot", "Chào bạn! Hiện tại thầy chưa có sẵn bài tập cho môn này. Thay vào đó, em có thể hỏi thầy về cách làm một dạng bài tập nào đó, thầy sẽ hướng dẫn em nhé!");
+                }
+                return; // Rất quan trọng: Ngừng xử lý tại đây nếu là yêu cầu bài tập từ file
+            }
+            // --- KẾT THÚC LOGIC XỬ LÝ BÀI TẬP TỪ baitap.txt ---
+
+
+            // Kiểm tra xem câu hỏi có phù hợp cấp tiểu học không
+            if (!laCauHoiTieuHoc(tinNhanNguoiDung)) {
+                themTinNhanVaoGiaoDien("bot", "Xin lỗi, tôi chỉ có thể giúp bạn với các câu hỏi và bài tập ở cấp độ tiểu học. Vui lòng hỏi những câu hỏi phù hợp hơn nhé.");
+                return;
+            }
+
+            // Gửi câu hỏi đến mô hình AI nếu không phải là yêu cầu bài tập từ file và phù hợp cấp tiểu học
+            try {
+                const loiNhac = `Bạn là một giáo viên AI thân thiện và hữu ích (lưu ý xưng hô với người dùng là thầy - em), chuyên giải đáp các câu hỏi và gợi ý cách làm bài tập cho học sinh tiểu học trong môn ${subjectFilters[currentSubject].name}. Hãy trả lời một cách đơn giản, dễ hiểu, và chỉ tập trung vào kiến thức cấp tiểu học. Tuyệt đối không giải bài tập cụ thể, chỉ gợi ý phương pháp hoặc hướng dẫn. Nếu câu hỏi không phù hợp cấp tiểu học hoặc yêu cầu giải bài tập chi tiết, hãy từ chừi một cách nhẹ nhàng và lịch sự. Nếu người dùng xin bài tập để làm thì cũng có thể được.
+                \n\nCâu hỏi: ${tinNhanNguoiDung}`;
+
+                const ketQua = await moHinh.generateContent(loiNhac);
+                const phanHoi = await ketQua.response;
+                const traLoiBot = phanHoi.text();
+                themTinNhanVaoGiaoDien("bot", traLoiBot);
+
+            } catch (loi) {
+                console.error("Lỗi khi gọi API Gemini: ", loi);
+                themTinNhanVaoGiaoDien("bot", "Rất tiếc, có lỗi xảy ra. Vui lòng thử lại sau nhé!");
+            }
+        }
+
+        /**
+         * Kiểm tra xem câu hỏi có phù hợp với cấp độ tiểu học hay không.
+         * @param {string} cauHoi - Câu hỏi của người dùng.
+         * @returns {boolean} - True nếu phù hợp, False nếu không.
+         */
+        function laCauHoiTieuHoc(cauHoi) {
+            const cauHoiThuong = cauHoi.toLowerCase();
+
+            // Kiểm tra các từ khóa loại trừ chung
+            const laKhongTieuHocChung = generalExcludeKeywords.some(tuKhoa => cauHoiThuong.includes(tuKhoa));
+            if (laKhongTieuHocChung) return false;
+
+            // Kiểm tra các từ khóa loại trừ theo môn học cụ thể
+            if (currentSubject && subjectFilters[currentSubject]) {
+                const subjectSpecificKeywords = subjectFilters[currentSubject].excludeKeywords;
+                const laKhongTieuHocMonHoc = subjectSpecificKeywords.some(tuKhoa => cauHoiThuong.includes(tuKhoa));
+                if (laKhongTieuHocMonHoc) return false;
+            }
+
+            return true;
+        }
+
+        // Hàm này không còn quyết định hành vi chính mà chỉ hỗ trợ regex cho homeworkRequestPhrases
+        function laYeuCauGiaiBaiTap(cauHoi) {
+            const cauHoiThuong = cauHoi.toLowerCase();
+            return homeworkRequestPhrases.test(cauHoiThuong);
+        }
+    </script>
+</body>
+</html>
