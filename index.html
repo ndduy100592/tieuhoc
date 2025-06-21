@@ -582,7 +582,7 @@
             oNhapTinNhan.value = ''; // Xóa nội dung trong ô nhập liệu
 
             // Xử lý lời chào đơn giản
-            const loiChao = ["chào", "hello", "hi"];
+            const loiChao = ["chào"];
             if (loiChao.some(chao => tinNhanNguoiDung.toLowerCase().includes(chao))) {
                 themTinNhanVaoGiaoDien("bot", `Chào bạn! Tôi là một chatbot AI được thiết kế để trả lời các câu hỏi cấp tiểu học cho môn ${subjectFilters[currentSubject].name}. Bạn có câu hỏi gì không?`);
                 return;
