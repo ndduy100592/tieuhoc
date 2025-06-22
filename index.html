@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot học tập trường TH Thượng Ấm</title>
+    <title>Chatbot học tập trường Tiểu Học Thượng Ấm</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap');
@@ -540,7 +540,7 @@
             homeMenu.style.display = 'none';
             chatbotContainer.style.display = 'flex';
             khungTroChuyen.innerHTML = ''; // Xóa tin nhắn cũ khi đổi môn
-            themTinNhanVaoGiaoDien("bot", `Chào mừng bạn đến với môn ${subjectFilters[subject].name}! Tôi có thể giúp gì cho bạn?`);
+            themTinNhanVaoGiaoDien("bot", `Chào mừng em đến với môn ${subjectFilters[subject].name}! Thầy có thể giúp gì cho em?`);
 
             // Đặt trạng thái 'active' cho nút sidebar tương ứng
             sidebarButtons.forEach(button => {
@@ -584,7 +584,7 @@
             // Xử lý lời chào đơn giản
             const loiChao = ["chào"];
             if (loiChao.some(chao => tinNhanNguoiDung.toLowerCase().includes(chao))) {
-                themTinNhanVaoGiaoDien("bot", `Chào bạn! Tôi là một chatbot AI được thiết kế để trả lời các câu hỏi cấp tiểu học cho môn ${subjectFilters[currentSubject].name}. Bạn có câu hỏi gì không?`);
+                themTinNhanVaoGiaoDien("bot", `Chào em! Thầy là một chatbot AI được thiết kế để trả lời các câu hỏi cấp tiểu học cho môn ${subjectFilters[currentSubject].name}. Bạn có câu hỏi gì không?`);
                 return;
             }
 
@@ -594,9 +594,9 @@
             if (isAskingForHomework) {
                 if (currentSubject && subjectFilters[currentSubject] && subjectFilters[currentSubject].homeworkExamples.length > 0) {
                     let examples = subjectFilters[currentSubject].homeworkExamples.map(e => `- ${e}`).join('\n');
-                    themTinNhanVaoGiaoDien("bot", `Chào bạn! Thầy có một vài dạng bài tập cơ bản mà em có thể tham khảo trong môn **${subjectFilters[currentSubject].name}** đây:\n${examples}\n\nEm hãy thử giải các bài tập này và hỏi thầy nếu có bất kỳ câu hỏi nào về cách làm nhé!`);
+                    themTinNhanVaoGiaoDien("bot", `Chào em! Thầy có một vài dạng bài tập cơ bản mà em có thể tham khảo trong môn **${subjectFilters[currentSubject].name}** đây:\n${examples}\n\nEm hãy thử giải các bài tập này và hỏi thầy nếu có bất kỳ câu hỏi nào về cách làm nhé!`);
                 } else {
-                    themTinNhanVaoGiaoDien("bot", "Chào bạn! Hiện tại thầy chưa có sẵn bài tập cho môn này. Thay vào đó, em có thể hỏi thầy về cách làm một dạng bài tập nào đó, thầy sẽ hướng dẫn em nhé!");
+                    themTinNhanVaoGiaoDien("bot", "Chào em! Hiện tại thầy chưa có sẵn bài tập cho môn này. Thay vào đó, em có thể hỏi thầy về cách làm một dạng bài tập nào đó, thầy sẽ hướng dẫn em nhé!");
                 }
                 return; // Rất quan trọng: Ngừng xử lý tại đây nếu là yêu cầu bài tập từ file
             }
@@ -611,7 +611,7 @@
 
             // Gửi câu hỏi đến mô hình AI nếu không phải là yêu cầu bài tập từ file và phù hợp cấp tiểu học
             try {
-                const loiNhac = `Bạn là một giáo viên AI thân thiện và hữu ích (lưu ý bạn luôn là thầy giáo và xưng hô với người dùng là thầy - em), chuyên giải đáp các câu hỏi và gợi ý cách làm bài tập cho học sinh tiểu học trong môn ${subjectFilters[currentSubject].name}. Hãy trả lời một cách đơn giản, dễ hiểu, và chỉ tập trung vào kiến thức cấp tiểu học. Tuyệt đối không giải bài tập cụ thể, chỉ gợi ý phương pháp hoặc hướng dẫn. Nếu câu hỏi không phù hợp cấp tiểu học hoặc yêu cầu giải bài tập chi tiết, hãy từ chừi một cách nhẹ nhàng và lịch sự. Nếu người dùng xin bài tập để làm thì cũng có thể được.
+                const loiNhac = `Bạn là một giáo viên AI thân thiện và hữu ích (lưu ý bạn luôn là thầy giáo và xưng hô với người dùng là thầy - em), chuyên giải đáp các câu hỏi và gợi ý cách làm bài tập cho học sinh tiểu học trong môn ${subjectFilters[currentSubject].name}. Hãy trả lời một cách đơn giản, dễ hiểu, và chỉ tập trung vào kiến thức cấp tiểu học. Tuyệt đối không giải bài tập cụ thể, chỉ gợi ý phương pháp hoặc hướng dẫn. Nếu câu hỏi không phù hợp cấp tiểu học hoặc yêu cầu giải bài tập chi tiết, hãy từ chối một cách nhẹ nhàng và lịch sự. Nếu người dùng xin bài tập để làm thì cũng có thể được.
                 \n\nCâu hỏi: ${tinNhanNguoiDung}`;
 
                 const ketQua = await moHinh.generateContent(loiNhac);
