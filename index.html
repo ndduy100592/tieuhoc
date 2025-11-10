@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot học tập trường TH Thượng Ấm</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>CHATBOT HỌC TẬP CHO HỌC SINH TIỂU HỌC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap');
@@ -22,7 +19,7 @@
             overflow: hidden;
         }
 
-        #gradeScreen {
+        #home-menu {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -36,62 +33,7 @@
             margin: 20px;
         }
 
-        #gradeScreen h1 {
-            color: #26a69a;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-        }
-
-        .grade-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            width: 80%;
-            max-width: 900px;
-        }
-
-        .grade-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 20px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .grade-button i {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .grade-button:hover {
-            background-color: #45a049;
-            transform: translateY(-3px);
-        }
-
-        #subjectScreen {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            padding: 20px;
-            text-align: center;
-            background-color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            margin: 20px;
-        }
-
-        #subjectScreen h1 {
+        #home-menu h1 {
             color: #26a69a;
             margin-bottom: 30px;
             font-size: 2.5em;
@@ -106,7 +48,7 @@
         }
 
         .subject-button {
-            background-color: #2196F3;
+            background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 10px;
@@ -128,57 +70,62 @@
         }
 
         .subject-button:hover {
-            background-color: #1976D2;
+            background-color: #45a049;
             transform: translateY(-3px);
-        }
-
-        #chapterScreen {
-            display: none;
-            flex-direction: column;
-            flex-grow: 1;
-            padding: 20px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            margin: 20px;
-        }
-
-        .chapter-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .chapter-card {
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-left: 4px solid #4CAF50;
-        }
-
-        .chapter-card:hover {
-            background-color: #e8f5e9;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .chapter-card h3 {
-            margin-top: 0;
-            color: #2E7D32;
         }
 
         #chatbot-container {
             display: none;
             flex-grow: 1;
-            flex-direction: column;
+            flex-direction: row;
             overflow: hidden;
             background-color: #ffffff;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             border-radius: 10px;
             margin: 20px;
+        }
+
+        #sidebar {
+            width: 200px;
+            background-color: #f0f4c3;
+            padding: 15px;
+            border-right: 1px solid #dce775;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset -2px 0 5px rgba(0,0,0,0.05);
+        }
+
+        #sidebar h3 {
+            color: #689f38;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar-button {
+            background-color: #c5e1a5;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 10px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-button i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .sidebar-button.active, .sidebar-button:hover {
+            background-color: #8bc34a;
+            color: white;
+            transform: translateX(3px);
         }
 
         .chat-area {
@@ -235,51 +182,19 @@
             align-items: center;
         }
 
-        #o-nhap-tin-nhan-container {
-            position: relative;
-            flex-grow: 1;
-            min-height: 48px;
-        }
-
         #o-nhap-tin-nhan {
-            width: 100%;
-            background: transparent;
-            position: relative;
-            z-index: 2;
-            color: transparent;
-            caret-color: #333;
+            flex-grow: 1;
             padding: 12px 18px;
             border: 1px solid #c5e1a5;
             border-radius: 25px;
             outline: none;
             font-size: 16px;
             transition: border-color 0.3s ease;
-            min-height: 48px;
-            resize: none;
-            overflow: hidden;
         }
 
         #o-nhap-tin-nhan:focus {
             border-color: #8bc34a;
             box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.2);
-        }
-
-        #o-nhap-tin-nhan-preview {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            min-height: 48px;
-            padding: 12px 18px;
-            pointer-events: none;
-            z-index: 1;
-            white-space: pre-wrap;
-            overflow: hidden;
-            color: #333;
-            border: 1px solid transparent;
-            border-radius: 25px;
-            font-size: 16px;
-            line-height: 1.4;
         }
 
         #nut-gui {
@@ -308,87 +223,68 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
-        .back-button {
-            margin-bottom: 20px;
-            align-self: flex-start;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .breadcrumb {
-            background-color: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .breadcrumb-item a {
-            color: #007bff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .breadcrumb-item a:hover {
-            text-decoration: underline;
-        }
-
-        .fraction {
-            display: inline-block;
-            text-align: center;
-            vertical-align: middle;
-            margin: 0 2px;
-        }
-        
-        .fraction span {
-            display: block;
-        }
-        
-        .fraction .numerator {
-            border-bottom: 1px solid #000;
-            padding: 0 3px;
-        }
-        
-        .fraction .denominator {
-            padding: 0 3px;
-        }
-
-        .mixed-number {
-            display: inline-flex;
-            align-items: center;
-            vertical-align: middle;
-            margin: 0 2px;
-        }
-        
-        .mixed-number .whole-part {
-            padding-right: 2px;
-        }
-        
-        .mixed-number .fraction {
-            display: inline-block;
-        }
-
         @media (max-width: 768px) {
-            .grade-buttons, .subject-buttons {
+            #home-menu {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            #home-menu h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            .subject-buttons {
                 grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
                 gap: 15px;
                 width: 95%;
             }
 
-            .grade-button, .subject-button {
+            .subject-button {
                 padding: 15px;
                 font-size: 1em;
             }
 
-            .grade-button i, .subject-button i {
+            .subject-button i {
                 font-size: 2em;
                 margin-bottom: 8px;
             }
 
             #chatbot-container {
+                flex-direction: column;
                 margin: 10px;
                 border-radius: 8px;
+            }
+
+            #sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #dce775;
+                padding: 10px;
+                box-shadow: inset 0 -2px 5px rgba(0,0,0,0.05);
+                flex-direction: row;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            #sidebar h3 {
+                display: none;
+            }
+
+            .sidebar-button {
+                flex-shrink: 0;
+                width: auto;
+                margin-bottom: 0;
+                margin-right: 10px;
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+
+            .sidebar-button i {
+                font-size: 1em;
+                margin-right: 5px;
             }
 
             .chat-area {
@@ -409,10 +305,9 @@
                 padding: 10px;
             }
 
-            #o-nhap-tin-nhan, #o-nhap-tin-nhan-preview {
+            #o-nhap-tin-nhan {
                 padding: 10px 15px;
                 font-size: 14px;
-                min-height: 40px;
             }
 
             #nut-gui {
@@ -425,67 +320,77 @@
     </style>
 </head>
 <body>
-    <div id="gradeScreen">
-        <h1>Chatbot học tập trường TH Thượng Ấm</h1>
-        <h3>Chọn lớp của em</h3>
-        <div class="grade-buttons">
-            <button class="grade-button" data-grade="lop1">
-                <i class="fas fa-user-graduate"></i>
-                Lớp 1
+    <div id="home-menu">
+        <h1>Chatbot học tập dành cho học sinh tiểu học</h1>
+        <div class="subject-buttons">
+            <button class="subject-button" data-subject="toan">
+                <i class="fas fa-calculator"></i>
+                Toán
             </button>
-            <button class="grade-button" data-grade="lop2">
-                <i class="fas fa-user-graduate"></i>
-                Lớp 2
+            <button class="subject-button" data-subject="tieng-viet">
+                <i class="fas fa-book-open"></i>
+                Tiếng Việt
             </button>
-            <button class="grade-button" data-grade="lop3">
-                <i class="fas fa-user-graduate"></i>
-                Lớp 3
+            <button class="subject-button" data-subject="tieng-anh">
+                <i class="fas fa-globe"></i>
+                Tiếng Anh
             </button>
-            <button class="grade-button" data-grade="lop4">
-                <i class="fas fa-user-graduate"></i>
-                Lớp 4
+            <button class="subject-button" data-subject="tin-hoc">
+                <i class="fas fa-laptop-code"></i>
+                Tin Học
             </button>
-            <button class="grade-button" data-grade="lop5">
-                <i class="fas fa-user-graduate"></i>
-                Lớp 5
+            <button class="subject-button" data-subject="cong-nghe">
+                <i class="fas fa-tools"></i>
+                Công Nghệ
             </button>
-        </div>
-    </div>
-
-    <div id="subjectScreen">
-        <button class="btn btn-secondary back-button" onclick="window.backToGrades()">
-            <i class="fas fa-arrow-left"></i> Quay lại chọn lớp
-        </button>
-        <h1 id="subjectScreenTitle">Chọn môn học</h1>
-        <div class="subject-buttons" id="subjectButtonsContainer">
-        </div>
-    </div>
-
-    <div id="chapterScreen">
-        <button class="btn btn-secondary back-button" onclick="window.backToSubjects()">
-            <i class="fas fa-arrow-left"></i> Quay lại môn học
-        </button>
-        <nav aria-label="breadcrumb" class="breadcrumb">
-            <ol class="breadcrumb" id="breadcrumb">
-            </ol>
-        </nav>
-        <h2 id="chapterScreenTitle">Chọn chương</h2>
-        <div class="chapter-list" id="chapterList">
+            <button class="subject-button" data-subject="lich-su-dia-ly">
+                <i class="fas fa-map-marked-alt"></i>
+                Lịch Sử & Địa Lý
+            </button>
+            <button class="subject-button" data-subject="khoa-hoc">
+                <i class="fas fa-flask"></i>
+                Khoa Học
+            </button>
         </div>
     </div>
 
     <div id="chatbot-container">
-        <button class="btn btn-secondary back-button" onclick="window.backToChapters()">
-            <i class="fas fa-arrow-left"></i> Quay lại chọn chương
-        </button>
+        <div id="sidebar">
+            <h3>Môn học</h3>
+            <button class="sidebar-button" data-subject="toan">
+                <i class="fas fa-calculator"></i>
+                Toán
+            </button>
+            <button class="sidebar-button" data-subject="tieng-viet">
+                <i class="fas fa-book-open"></i>
+                Tiếng Việt
+            </button>
+            <button class="sidebar-button" data-subject="tieng-anh">
+                <i class="fas fa-globe"></i>
+                Tiếng Anh
+            </button>
+            <button class="sidebar-button" data-subject="tin-hoc">
+                <i class="fas fa-laptop-code"></i>
+                Tin Học
+            </button>
+            <button class="sidebar-button" data-subject="cong-nghe">
+                <i class="fas fa-tools"></i>
+                Công Nghệ
+            </button>
+            <button class="sidebar-button" data-subject="lich-su-dia-ly">
+                <i class="fas fa-map-marked-alt"></i>
+                Lịch Sử & Địa Lý
+            </button>
+            <button class="sidebar-button" data-subject="khoa-hoc">
+                <i class="fas fa-flask"></i>
+                Khoa Học
+            </button>
+        </div>
         <div class="chat-area">
             <div id="khung-tro-chuyen">
             </div>
             <div id="khu-vuc-nhap">
-                <div id="o-nhap-tin-nhan-container">
-                    <textarea id="o-nhap-tin-nhan" placeholder="Hỏi tôi điều gì đó..." rows="1"></textarea>
-                    <div id="o-nhap-tin-nhan-preview"></div>
-                </div>
+                <input type="text" id="o-nhap-tin-nhan" placeholder="Hỏi tôi điều gì đó...">
                 <button id="nut-gui">
                     <i class="fas fa-paper-plane"></i>
                 </button>
@@ -493,8 +398,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script type="importmap">
         {
             "imports": {
@@ -505,66 +408,28 @@
     <script type="module">
         import { GoogleGenerativeAI } from "@google/generative-ai";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCyhGASygL5BVBB-0pJJNwoyTZ61pAzP7c",
-            authDomain: "tieuhoc-a7f57.firebaseapp.com",
-            projectId: "tieuhoc-a7f57",
-            storageBucket: "tieuhoc-a7f57.appspot.com",
-            messagingSenderId: "736631398515",
-            appId: "1:736631398515:web:a41bbabeeb98c3df42ca06"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
+        // Thay thế "YOUR_API_KEY" bằng khóa API thực tế của bạn
         const KHOA_API = "AIzaSyCkMQR9STDqptOaQgovt7mW-vUCrHyhUeA"; 
         const moHinhAI = new GoogleGenerativeAI(KHOA_API);
         const moHinh = moHinhAI.getGenerativeModel({ model: "Gemini 2.5 Flash-Lite" });
 
-        const gradeScreen = document.getElementById('gradeScreen');
-        const subjectScreen = document.getElementById('subjectScreen');
-        const chapterScreen = document.getElementById('chapterScreen');
+        const homeMenu = document.getElementById('home-menu');
         const chatbotContainer = document.getElementById('chatbot-container');
         const khungTroChuyen = document.getElementById('khung-tro-chuyen');
         const oNhapTinNhan = document.getElementById('o-nhap-tin-nhan');
-        const oNhapTinNhanPreview = document.getElementById('o-nhap-tin-nhan-preview');
         const nutGui = document.getElementById('nut-gui');
-        const subjectButtonsContainer = document.getElementById('subjectButtonsContainer');
-        const chapterList = document.getElementById('chapterList');
-        const breadcrumb = document.getElementById('breadcrumb');
-        const subjectScreenTitle = document.getElementById('subjectScreenTitle');
-        const chapterScreenTitle = document.getElementById('chapterScreenTitle');
-        const gradeButtons = document.querySelectorAll('.grade-button');
+        const subjectButtons = document.querySelectorAll('.subject-button');
+        const sidebarButtons = document.querySelectorAll('.sidebar-button');
 
-        let currentGrade = '';
         let currentSubject = '';
-        let currentChapterId = '';
-        let currentChapterName = '';
-        let currentExercises = [];
-        let currentQuiz = null;
-        let quizSubject = '';
+        let homeworkData = {}; // Đối tượng để lưu trữ dữ liệu bài tập từ baitap.txt
 
-        const subjectsByGrade = {
-            'lop1': ['Toán', 'Tiếng Việt', 'Tự nhiên và Xã hội'],
-            'lop2': ['Toán', 'Tiếng Việt', 'Tự nhiên và Xã hội'],
-            'lop3': ['Toán', 'Tiếng Việt', 'Tự nhiên và Xã hội', 'Tiếng Anh'],
-            'lop4': ['Toán', 'Tiếng Việt', 'Khoa học', 'Lịch sử & Địa lý', 'Tiếng Anh'],
-            'lop5': ['Toán', 'Tiếng Việt', 'Khoa học', 'Lịch sử & Địa lý', 'Tiếng Anh']
-        };
-
-        const gradeNames = {
-            'lop1': '1',
-            'lop2': '2',
-            'lop3': '3',
-            'lop4': '4',
-            'lop5': '5'
-        };
-
+        // Định nghĩa các môn học và bộ lọc
         const subjectFilters = {
             "toan": {
                 name: "Toán",
                 excludeKeywords: ["đại số tuyến tính", "giải tích", "lượng tử", "phân tích chuyên sâu"],
-                homeworkExamples: []
+                homeworkExamples: [] // Sẽ được điền từ baitap.txt
             },
             "tieng-viet": {
                 name: "Tiếng Việt",
@@ -602,371 +467,151 @@
             "đại học", "cao học", "nghiên cứu", "phân tích chuyên sâu", "vật lý hạt nhân", "triết học",
             "kinh tế vĩ mô", "chính trị quốc tế", "chứng minh", "phản biện", "tôn giáo", "đức tin"
         ];
-        
+        // Các cụm từ người dùng có thể dùng để yêu cầu bài tập
         const homeworkRequestPhrases = /(cho (tôi|em) bài tập|xin bài tập|gợi ý bài tập|bài tập về)/;
 
-        function initApp() {
-            gradeButtons.forEach(button => {
-                button.addEventListener('click', () => selectGrade(button.dataset.grade));
-            });
 
-            nutGui.addEventListener('click', guiTinNhan);
-            
-            oNhapTinNhan.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    guiTinNhan();
+        // Hàm để tải và phân tích dữ liệu bài tập từ baitap.txt
+        async function loadHomeworkData() {
+            try {
+                const response = await fetch('baitap.txt');
+                if (!response.ok) {
+                    throw new Error(`Lỗi HTTP! status: ${response.status}`);
                 }
-            });
+                const text = await response.text();
+                // Tách các dòng, loại bỏ khoảng trắng và dòng trống
+                const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
 
-            oNhapTinNhan.addEventListener('input', function() {
-                updateInputPreview();
-                adjustTextareaHeight();
-            });
-
-            window.backToGrades = backToGrades;
-            window.backToSubjects = backToSubjects;
-            window.backToChapters = backToChapters;
-        }
-
-        function adjustTextareaHeight() {
-            oNhapTinNhan.style.height = 'auto';
-            oNhapTinNhan.style.height = (oNhapTinNhan.scrollHeight) + 'px';
-            oNhapTinNhanPreview.style.height = oNhapTinNhan.style.height;
-        }
-
-        function updateInputPreview() {
-            const text = oNhapTinNhan.value;
-            oNhapTinNhanPreview.innerHTML = formatFractionsAndMixedNumbers(escapeHtml(text));
-        }
-
-        function escapeHtml(unsafe) {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        function formatFractionsAndMixedNumbers(text) {
-            const mixedNumberRegex = /(\d+)(?:\s|)(\()(\d+)\/(\d+)(\))/g;
-            let processedText = text.replace(mixedNumberRegex, (match, whole, p1, numerator, denominator, p2) => {
-                return `<span class="mixed-number"><span class="whole-part">${whole}</span><span class="fraction"><span class="numerator">${numerator}</span><span class="denominator">${denominator}</span></span></span>`;
-            });
-            
-            const fractionRegex = /([^\/\s]+)\/([^\/\s]+)/g;
-            processedText = processedText.replace(fractionRegex, (match, numerator, denominator) => {
-                if (processedText.includes(`<span class="mixed-number"><span class="whole-part">`)) {
-                    return match;
+                let currentSection = '';
+                for (const line of lines) {
+                    if (line.startsWith('#')) {
+                        currentSection = line.substring(1); // Lấy khóa môn học (vd: "toan")
+                        homeworkData[currentSection] = []; // Khởi tạo mảng rỗng cho môn học này
+                    } else if (currentSection && homeworkData[currentSection]) {
+                        homeworkData[currentSection].push(line); // Thêm bài tập vào môn học hiện tại
+                    }
                 }
-                return `<span class="fraction"><span class="numerator">${numerator}</span><span class="denominator">${denominator}</span></span>`;
-            });
-            
-            return processedText;
+                // Điền dữ liệu bài tập đã tải vào subjectFilters
+                for (const subjectKey in homeworkData) {
+                    if (subjectFilters[subjectKey]) {
+                        subjectFilters[subjectKey].homeworkExamples = homeworkData[subjectKey];
+                    }
+                }
+                console.log("Dữ liệu bài tập đã tải:", homeworkData);
+            } catch (error) {
+                console.error("Không thể tải dữ liệu bài tập:", error);
+                // Đặt lại homeworkExamples thành rỗng nếu có lỗi
+                for (const key in subjectFilters) {
+                    subjectFilters[key].homeworkExamples = [];
+                }
+            }
         }
 
-        function selectGrade(grade) {
-            currentGrade = grade;
-            gradeScreen.style.display = 'none';
-            subjectScreen.style.display = 'flex';
-            updateBreadcrumb();
-            loadSubjects();
-        }
+        // Tải dữ liệu bài tập khi script bắt đầu
+        loadHomeworkData();
 
-        function backToGrades() {
-            currentGrade = '';
-            currentSubject = '';
-            currentChapterId = '';
-            currentChapterName = '';
-            gradeScreen.style.display = 'flex';
-            subjectScreen.style.display = 'none';
-            chapterScreen.style.display = 'none';
-            chatbotContainer.style.display = 'none';
-            breadcrumb.innerHTML = '';
-        }
 
-        function loadSubjects() {
-            subjectButtonsContainer.innerHTML = '';
-            const subjects = subjectsByGrade[currentGrade];
-            
-            subjects.forEach(subject => {
-                const button = document.createElement('button');
-                button.className = 'subject-button';
-                button.dataset.subject = subject.toLowerCase().replace(/ /g, '-').replace(/&/g, '-');
-                
-                let iconClass = 'fa-book';
-                if (subject.includes('Toán')) iconClass = 'fa-calculator';
-                else if (subject.includes('Tiếng Anh')) iconClass = 'fa-globe';
-                else if (subject.includes('Tin Học')) iconClass = 'fa-laptop-code';
-                else if (subject.includes('Công Nghệ')) iconClass = 'fa-tools';
-                else if (subject.includes('Lịch sử') || subject.includes('Địa lý')) iconClass = 'fa-map-marked-alt';
-                else if (subject.includes('Khoa học')) iconClass = 'fa-flask';
-                else if (subject.includes('Tự nhiên')) iconClass = 'fa-leaf';
-                
-                button.innerHTML = `
-                    <i class="fas ${iconClass}"></i>
-                    ${subject}
-                `;
-                
-                button.addEventListener('click', () => selectSubject(subject));
-                subjectButtonsContainer.appendChild(button);
-            });
-            
-            subjectScreenTitle.textContent = `Lớp ${gradeNames[currentGrade]} - Chọn môn học`;
-        }
+        // Gán sự kiện cho các nút chọn môn học ở trang chủ
+        subjectButtons.forEach(button => {
+            button.addEventListener('click', () => selectSubject(button.dataset.subject));
+        });
 
+        // Gán sự kiện cho các nút chọn môn học ở thanh sidebar
+        sidebarButtons.forEach(button => {
+            button.addEventListener('click', () => selectSubject(button.dataset.subject));
+        });
+
+        // Gán sự kiện cho nút gửi tin nhắn
+        nutGui.addEventListener('click', guiTinNhan);
+        // Gán sự kiện cho phím Enter trong ô nhập tin nhắn
+        oNhapTinNhan.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                guiTinNhan();
+            }
+        });
+
+        /**
+         * Chuyển đổi giữa menu chọn môn học và giao diện chatbot.
+         * Đặt môn học hiện tại và hiển thị lời chào.
+         * @param {string} subject - Khóa của môn học được chọn (vd: "toan").
+         */
         function selectSubject(subject) {
             currentSubject = subject;
-            subjectScreen.style.display = 'none';
-            chapterScreen.style.display = 'flex';
-            updateBreadcrumb();
-            loadChapters();
-        }
-
-        function backToSubjects() {
-            currentSubject = '';
-            currentChapterId = '';
-            currentChapterName = '';
-            subjectScreen.style.display = 'flex';
-            chapterScreen.style.display = 'none';
-            chatbotContainer.style.display = 'none';
-            updateBreadcrumb();
-        }
-
-        async function loadChapters() {
-            chapterList.innerHTML = '<div class="text-center py-3">Đang tải danh sách chương...</div>';
-            chapterScreenTitle.textContent = `Môn ${currentSubject} - Chọn chương`;
-
-            try {
-                const snapshot = await db.collection('grades').doc(currentGrade)
-                    .collection('subjects').doc(currentSubject)
-                    .collection('chapters').orderBy('createdAt').get();
-                
-                if (snapshot.empty) {
-                    chapterList.innerHTML = '<div class="text-center py-3">Chưa có chương nào</div>';
-                    return;
-                }
-
-                chapterList.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const chapter = doc.data();
-                    const chapterItem = document.createElement('div');
-                    chapterItem.className = 'chapter-card';
-                    chapterItem.innerHTML = `
-                        <h3>${chapter.name}</h3>
-                        <p>Nhấn để xem bài tập</p>
-                    `;
-                    chapterItem.addEventListener('click', () => selectChapter(doc.id, chapter.name));
-                    chapterList.appendChild(chapterItem);
-                });
-            } catch (error) {
-                console.error('Lỗi khi tải chương:', error);
-                chapterList.innerHTML = '<div class="text-center py-3 text-danger">Lỗi khi tải danh sách chương</div>';
-            }
-        }
-
-        async function selectChapter(chapterId, chapterName) {
-            currentChapterId = chapterId;
-            currentChapterName = chapterName;
-            chapterScreen.style.display = 'none';
+            homeMenu.style.display = 'none';
             chatbotContainer.style.display = 'flex';
-            updateBreadcrumb();
-            await loadExercises();
-            khungTroChuyen.innerHTML = '';
-            themTinNhanVaoGiaoDien("bot", `Chào mừng em đến với chương "${chapterName}" của môn ${currentSubject}! Tôi có thể giúp gì cho em?`);
-        }
+            khungTroChuyen.innerHTML = ''; // Xóa tin nhắn cũ khi đổi môn
+            themTinNhanVaoGiaoDien("bot", `Chào mừng em đến với môn ${subjectFilters[subject].name}! Thầy có thể giúp gì cho em?`);
 
-        function backToChapters() {
-            currentChapterId = '';
-            currentChapterName = '';
-            chapterScreen.style.display = 'flex';
-            chatbotContainer.style.display = 'none';
-            updateBreadcrumb();
-        }
-
-        async function loadExercises() {
-            currentExercises = [];
-            
-            try {
-                const snapshot = await db.collection('grades').doc(currentGrade)
-                    .collection('subjects').doc(currentSubject)
-                    .collection('chapters').doc(currentChapterId)
-                    .collection('exercises').orderBy('createdAt').get();
-                
-                if (!snapshot.empty) {
-                    snapshot.forEach(doc => {
-                        currentExercises.push({
-                            id: doc.id,
-                            question: doc.data().question
-                        });
-                    });
+            // Đặt trạng thái 'active' cho nút sidebar tương ứng
+            sidebarButtons.forEach(button => {
+                if (button.dataset.subject === subject) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
                 }
-                
-                const subjectKey = currentSubject.toLowerCase().replace(/ /g, '-').replace(/&/g, '-');
-                if (subjectFilters[subjectKey]) {
-                    subjectFilters[subjectKey].homeworkExamples = currentExercises.map(ex => ex.question);
-                }
-            } catch (error) {
-                console.error('Lỗi khi tải bài tập:', error);
-            }
+            });
         }
 
-        function updateBreadcrumb() {
-            breadcrumb.innerHTML = '';
-            
-            if (currentGrade) {
-                const gradeItem = document.createElement('li');
-                gradeItem.className = 'breadcrumb-item';
-                gradeItem.innerHTML = `<a href="#" onclick="window.backToGrades()">${gradeNames[currentGrade]}</a>`;
-                breadcrumb.appendChild(gradeItem);
-            }
-            
-            if (currentSubject) {
-                const subjectItem = document.createElement('li');
-                subjectItem.className = 'breadcrumb-item';
-                subjectItem.innerHTML = `<a href="#" onclick="window.backToSubjects()">${currentSubject}</a>`;
-                breadcrumb.appendChild(subjectItem);
-            }
-            
-            if (currentChapterName) {
-                const chapterItem = document.createElement('li');
-                chapterItem.className = 'breadcrumb-item active';
-                chapterItem.textContent = currentChapterName;
-                breadcrumb.appendChild(chapterItem);
-            }
-        }
-
+        /**
+         * Thêm tin nhắn vào giao diện trò chuyện.
+         * @param {string} nguoiGui - Người gửi tin nhắn ("nguoi-dung" hoặc "bot").
+         * @param {string} vanBan - Nội dung tin nhắn.
+         */
         function themTinNhanVaoGiaoDien(nguoiGui, vanBan) {
             const divTinNhan = document.createElement('div');
             divTinNhan.classList.add('tin-nhan', `tin-nhan-${nguoiGui}`);
 
-            let processedText = formatFractionsAndMixedNumbers(vanBan);
-            processedText = processedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            processedText = processedText.replace(/\n/g, '<br>');
+            // Chuyển đổi định dạng markdown cơ bản (in đậm, xuống dòng)
+            let formattedText = vanBan.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            formattedText = formattedText.replace(/\n/g, '<br>');
 
-            divTinNhan.innerHTML = processedText;
+            divTinNhan.innerHTML = formattedText;
             khungTroChuyen.appendChild(divTinNhan);
+            // Cuộn xuống cuối khung trò chuyện
             khungTroChuyen.scrollTop = khungTroChuyen.scrollHeight;
         }
 
-        function startMultipleChoiceQuiz(subject) {
-            if (!currentExercises || currentExercises.length === 0) {
-                themTinNhanVaoGiaoDien("bot", `Hiện không có bài tập trắc nghiệm nào cho chương này.`);
-                return;
-            }
-
-            const allQuestions = currentExercises;
-            const selectedQuestions = (allQuestions.length > 10) 
-                ? getRandomQuestions(allQuestions, 10) 
-                : allQuestions;
-
-            quizSubject = subject;
-            currentQuiz = {
-                questions: selectedQuestions,
-                currentQuestionIndex: 0,
-                userAnswers: [],
-                score: 0
-            };
-            
-            showNextQuestion();
-        }
-
-        function getRandomQuestions(questions, count) {
-            const shuffled = [...questions].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, count);
-        }
-
-        function showNextQuestion() {
-            if (currentQuiz.currentQuestionIndex >= currentQuiz.questions.length) {
-                finishQuiz();
-                return;
-            }
-            
-            const question = currentQuiz.questions[currentQuiz.currentQuestionIndex];
-            let message = `Câu ${currentQuiz.currentQuestionIndex + 1}: ${question.question}\n\n`;
-            message += "Hãy trả lời câu hỏi này (em có thể nhập câu trả lời của mình)";
-            
-            themTinNhanVaoGiaoDien("bot", message);
-        }
-
-        function finishQuiz() {
-            const totalQuestions = currentQuiz.questions.length;
-            const score = (currentQuiz.score / totalQuestions) * 10;
-            
-            let resultMessage = `Kết thúc bài tập!\n`;
-            resultMessage += `em đã hoàn thành ${totalQuestions} câu hỏi\n`;
-            resultMessage += `Số câu đúng: ${currentQuiz.score}/${totalQuestions}\n`;
-            resultMessage += `Điểm của em: ${score.toFixed(1)}/10\n\n`;
-            
-            themTinNhanVaoGiaoDien("bot", resultMessage);
-            currentQuiz = null;
-            quizSubject = '';
-        }
-
-        function handleQuizAnswer(answer) {
-            const currentQuestion = currentQuiz.questions[currentQuiz.currentQuestionIndex];
-            const userAnswer = answer.trim();
-            
-            currentQuiz.userAnswers.push(userAnswer);
-            currentQuiz.score++;
-            themTinNhanVaoGiaoDien("bot", "Cảm ơn câu trả lời của em!");
-                
-            currentQuiz.currentQuestionIndex++;
-            setTimeout(() => showNextQuestion(), 1500);
-        }
-
+        /**
+         * Xử lý gửi tin nhắn của người dùng và nhận phản hồi từ bot.
+         */
         async function guiTinNhan() {
             const tinNhanNguoiDung = oNhapTinNhan.value.trim();
-            if (!tinNhanNguoiDung) return;
+            if (!tinNhanNguoiDung) return; // Không làm gì nếu tin nhắn rỗng
 
             themTinNhanVaoGiaoDien("nguoi-dung", tinNhanNguoiDung);
-            oNhapTinNhan.value = '';
-            oNhapTinNhanPreview.innerHTML = '';
-            adjustTextareaHeight();
+            oNhapTinNhan.value = ''; // Xóa nội dung trong ô nhập liệu
 
-            if (currentQuiz) {
-                handleQuizAnswer(tinNhanNguoiDung);
-                return;
-            }
-
-            const isAskingForMultipleChoice = /(bài tập trắc nghiệm|trắc nghiệm|bài tập TN)/i.test(tinNhanNguoiDung);
-            if (isAskingForMultipleChoice) {
-                const subjectKey = currentSubject.toLowerCase().replace(/ /g, '-').replace(/&/g, '-');
-                startMultipleChoiceQuiz(subjectKey);
-                return;
-            }
-
-            const loiChao = ["chào", "hello", "hi"];
+            // Xử lý lời chào đơn giản
+            const loiChao = ["chào"];
             if (loiChao.some(chao => tinNhanNguoiDung.toLowerCase().includes(chao))) {
-                themTinNhanVaoGiaoDien("bot", `Chào em! Tôi là một chatbot AI được thiết kế để trả lời các câu hỏi cấp tiểu học cho môn ${currentSubject}, chương "${currentChapterName}". em có câu hỏi gì không?`);
+                themTinNhanVaoGiaoDien("bot", `Chào em! Thầy là một chatbot AI được thiết kế để trả lời các câu hỏi cấp tiểu học cho môn ${subjectFilters[currentSubject].name}. Bạn có câu hỏi gì không?`);
                 return;
             }
 
+            // --- LOGIC XỬ LÝ YÊU CẦU BÀI TẬP TỪ baitap.txt ---
             const isAskingForHomework = homeworkRequestPhrases.test(tinNhanNguoiDung.toLowerCase());
 
             if (isAskingForHomework) {
-                const subjectKey = currentSubject.toLowerCase().replace(/ /g, '-').replace(/&/g, '-');
-                
-                if (currentExercises && currentExercises.length > 0) {
-                    let examples = currentExercises.map((e, i) => `${i + 1}. ${e.question}`).join('\n');
-                    themTinNhanVaoGiaoDien("bot", `Dưới đây là một số bài tập trong chương "${currentChapterName}" môn ${currentSubject}:\n${examples}\n\nem hãy thử giải các bài tập này và hỏi tôi nếu có bất kỳ câu hỏi nào về cách làm nhé!`);
+                if (currentSubject && subjectFilters[currentSubject] && subjectFilters[currentSubject].homeworkExamples.length > 0) {
+                    let examples = subjectFilters[currentSubject].homeworkExamples.map(e => `- ${e}`).join('\n');
+                    themTinNhanVaoGiaoDien("bot", `Chào em! Thầy có một vài dạng bài tập cơ bản mà em có thể tham khảo trong môn **${subjectFilters[currentSubject].name}** đây:\n${examples}\n\nEm hãy thử giải các bài tập này và hỏi thầy nếu có bất kỳ câu hỏi nào về cách làm nhé!`);
                 } else {
-                    themTinNhanVaoGiaoDien("bot", `Hiện không có bài tập nào trong chương "${currentChapterName}" của môn ${currentSubject}. em có thể hỏi tôi về cách làm một dạng bài tập nào đó, tôi sẽ hướng dẫn em!`);
+                    themTinNhanVaoGiaoDien("bot", "Chào em! Hiện tại thầy chưa có sẵn bài tập cho môn này. Thay vào đó, em có thể hỏi thầy về cách làm một dạng bài tập nào đó, thầy sẽ hướng dẫn em nhé!");
                 }
-                return;
+                return; // Rất quan trọng: Ngừng xử lý tại đây nếu là yêu cầu bài tập từ file
             }
+            // --- KẾT THÚC LOGIC XỬ LÝ BÀI TẬP TỪ baitap.txt ---
 
+
+            // Kiểm tra xem câu hỏi có phù hợp cấp tiểu học không
             if (!laCauHoiTieuHoc(tinNhanNguoiDung)) {
-                themTinNhanVaoGiaoDien("bot", "Xin lỗi, tôi chỉ có thể giúp em với các câu hỏi và bài tập ở cấp độ tiểu học. Vui lòng hỏi những câu hỏi phù hợp hơn nhé.");
+                themTinNhanVaoGiaoDien("bot", "Xin lỗi, tôi chỉ có thể giúp bạn với các câu hỏi và bài tập ở cấp độ tiểu học. Vui lòng hỏi những câu hỏi phù hợp hơn nhé.");
                 return;
             }
 
+            // Gửi câu hỏi đến mô hình AI nếu không phải là yêu cầu bài tập từ file và phù hợp cấp tiểu học
             try {
-                const subjectKey = currentSubject.toLowerCase().replace(/ /g, '-').replace(/&/g, '-');
-                const subjectName = subjectFilters[subjectKey]?.name || currentSubject;
-                
-                const loiNhac = `em là một giáo viên AI thân thiện và hữu ích (lưu ý xưng hô với người dùng là thầy - em), chuyên giải đáp các câu hỏi và gợi ý cách làm bài tập cho học sinh tiểu học trong môn ${subjectName}, chương "${currentChapterName}". Hãy trả lời một cách đơn giản, dễ hiểu, và chỉ tập trung vào kiến thức cấp tiểu học. Tuyệt đối không giải bài tập cụ thể, chỉ gợi ý phương pháp hoặc hướng dẫn. Nếu câu hỏi không phù hợp cấp tiểu học hoặc yêu cầu giải bài tập chi tiết, hãy từ chối một cách nhẹ nhàng và lịch sự. Nếu người dùng xin bài tập để làm thì cũng có thể được.
+                const loiNhac = `Bạn là một giáo viên AI thân thiện và hữu ích (lưu ý bạn luôn là thầy giáo và xưng hô với người dùng là thầy - em), chuyên giải đáp các câu hỏi và gợi ý cách làm bài tập cho học sinh tiểu học trong môn ${subjectFilters[currentSubject].name}. Hãy trả lời một cách đơn giản, dễ hiểu, và chỉ tập trung vào kiến thức cấp tiểu học. Tuyệt đối không giải bài tập cụ thể, chỉ gợi ý phương pháp hoặc hướng dẫn. Nếu câu hỏi không phù hợp cấp tiểu học hoặc yêu cầu giải bài tập chi tiết, hãy từ chối một cách nhẹ nhàng và lịch sự. Nếu người dùng xin bài tập để làm thì cũng có thể được.
                 \n\nCâu hỏi: ${tinNhanNguoiDung}`;
 
                 const ketQua = await moHinh.generateContent(loiNhac);
@@ -980,15 +625,21 @@
             }
         }
 
+        /**
+         * Kiểm tra xem câu hỏi có phù hợp với cấp độ tiểu học hay không.
+         * @param {string} cauHoi - Câu hỏi của người dùng.
+         * @returns {boolean} - True nếu phù hợp, False nếu không.
+         */
         function laCauHoiTieuHoc(cauHoi) {
             const cauHoiThuong = cauHoi.toLowerCase();
 
+            // Kiểm tra các từ khóa loại trừ chung
             const laKhongTieuHocChung = generalExcludeKeywords.some(tuKhoa => cauHoiThuong.includes(tuKhoa));
             if (laKhongTieuHocChung) return false;
 
-            const subjectKey = currentSubject.toLowerCase().replace(/ /g, '-').replace(/&/g, '-');
-            if (subjectFilters[subjectKey]) {
-                const subjectSpecificKeywords = subjectFilters[subjectKey].excludeKeywords;
+            // Kiểm tra các từ khóa loại trừ theo môn học cụ thể
+            if (currentSubject && subjectFilters[currentSubject]) {
+                const subjectSpecificKeywords = subjectFilters[currentSubject].excludeKeywords;
                 const laKhongTieuHocMonHoc = subjectSpecificKeywords.some(tuKhoa => cauHoiThuong.includes(tuKhoa));
                 if (laKhongTieuHocMonHoc) return false;
             }
@@ -996,7 +647,11 @@
             return true;
         }
 
-        document.addEventListener('DOMContentLoaded', initApp);
+        // Hàm này không còn quyết định hành vi chính mà chỉ hỗ trợ regex cho homeworkRequestPhrases
+        function laYeuCauGiaiBaiTap(cauHoi) {
+            const cauHoiThuong = cauHoi.toLowerCase();
+            return homeworkRequestPhrases.test(cauHoiThuong);
+        }
     </script>
 </body>
 </html>
