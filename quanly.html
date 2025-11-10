@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Bài tập</title>
+    <!-- Nhúng Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- Nhúng Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .nav-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: 15px;
+        }
+        .nav-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        .list-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .exercise-item {
+            border-left: 4px solid #0d6efd;
+            margin-bottom: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .back-btn {
+            margin-bottom: 15px;
+        }
+        .breadcrumb {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="text-center">Quản lý Bài tập</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Breadcrumb navigation -->
+                        <nav id="breadcrumb" class="breadcrumb hidden">
+                            <!-- Dynamic breadcrumb will be inserted here -->
+                        </nav>
+
+                        <!-- Màn hình chọn lớp -->
+                        <div id="gradeScreen">
+                            <h3 class="text-center mb-4">Chọn lớp</h3>
+                            <div class="row g-4">
+                                <div class="col-md-3">
+                                    <div class="card nav-card" onclick="selectGrade('lop1')">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Lớp 1</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card nav-card" onclick="selectGrade('lop2')">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Lớp 2</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card nav-card" onclick="selectGrade('lop3')">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Lớp 3</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card nav-card" onclick="selectGrade('lop4')">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Lớp 4</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card nav-card" onclick="selectGrade('lop5')">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">Lớp 5</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Màn hình chọn môn học -->
+                        <div id="subjectScreen" class="hidden">
+                            <button class="btn btn-secondary back-btn" onclick="backToGrades()">
+                                ← Quay lại chọn lớp
+                            </button>
+                            <h3 class="text-center mb-4">Chọn môn học</h3>
+                            <div class="row g-4" id="subjectList">
+                                <!-- Subjects will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Màn hình chọn chương -->
+                        <div id="chapterScreen" class="hidden">
+                            <button class="btn btn-secondary back-btn" onclick="backToSubjects()">
+                                ← Quay lại môn học
+                            </button>
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3 id="currentChapterTitle" class="mb-0"></h3>
+                                <button class="btn btn-primary" onclick="showAddChapterModal()">Thêm chương</button>
+                            </div>
+                            
+                            <div class="list-container" id="chapterList">
+                                <!-- Chapters will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Màn hình bài tập -->
+                        <div id="exerciseScreen" class="hidden">
+                            <button class="btn btn-secondary back-btn" onclick="backToChapters()">
+                                ← Quay lại chương
+                            </button>
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3 id="currentExerciseTitle" class="mb-0"></h3>
+                                <button class="btn btn-primary" onclick="showAddExerciseModal()">Thêm bài tập</button>
+                            </div>
+                            
+                            <div class="list-container" id="exerciseList">
+                                <!-- Exercises will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal thêm chương mới -->
+    <div class="modal fade" id="addChapterModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm chương mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="chapterName" class="form-label">Tên chương</label>
+                        <input type="text" class="form-control" id="chapterName">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" onclick="addNewChapter()">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal thêm/sửa bài tập -->
+    <div class="modal fade" id="exerciseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exerciseModalTitle">Thêm bài tập mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="exerciseQuestion" class="form-label">Câu hỏi</label>
+                        <textarea class="form-control" id="exerciseQuestion" rows="5"></textarea>
+                    </div>
+                    <input type="hidden" id="currentExerciseId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" onclick="saveExercise()">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nhúng Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Cấu hình Firebase - THAY THẾ bằng cấu hình của bạn
+        const firebaseConfig = {
+            apiKey: "AIzaSyCyhGASygL5BVBB-0pJJNwoyTZ61pAzP7c",
+            authDomain: "tieuhoc-a7f57.firebaseapp.com",
+            projectId: "tieuhoc-a7f57",
+            storageBucket: "tieuhoc-a7f57.firebasestorage.app",
+            messagingSenderId: "736631398515",
+            appId: "1:736631398515:web:a41bbabeeb98c3df42ca06"
+        };
+
+        // Khởi tạo Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Biến toàn cục
+        let currentGrade = '';
+        let currentSubject = '';
+        let currentChapter = '';
+        let currentChapterId = '';
+        let currentExerciseId = '';
+
+        // Danh sách môn học theo lớp
+        const subjectsByGrade = {
+            'lop1': ['Toán', 'Tiếng Việt', 'Tự nhiên và Xã hội'],
+            'lop2': ['Toán', 'Tiếng Việt', 'Tự nhiên và Xã hội'],
+            'lop3': ['Toán', 'Tiếng Việt', 'Tự nhiên và Xã hội', 'Tiếng Anh'],
+            'lop4': ['Toán', 'Tiếng Việt', 'Khoa học', 'Lịch sử & Địa lý', 'Tiếng Anh'],
+            'lop5': ['Toán', 'Tiếng Việt', 'Khoa học', 'Lịch sử & Địa lý', 'Tiếng Anh']
+        };
+
+        // Tên lớp
+        const gradeNames = {
+            'lop1': 'Lớp 1',
+            'lop2': 'Lớp 2',
+            'lop3': 'Lớp 3',
+            'lop4': 'Lớp 4',
+            'lop5': 'Lớp 5'
+        };
+
+        // Cập nhật breadcrumb
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            breadcrumb.innerHTML = '';
+            
+            // Thêm lớp
+            if (currentGrade) {
+                const gradeItem = document.createElement('li');
+                gradeItem.className = 'breadcrumb-item';
+                gradeItem.innerHTML = `<a href="#" onclick="backToGrades()">${gradeNames[currentGrade]}</a>`;
+                breadcrumb.appendChild(gradeItem);
+            }
+            
+            // Thêm môn học
+            if (currentSubject) {
+                const subjectItem = document.createElement('li');
+                subjectItem.className = 'breadcrumb-item';
+                subjectItem.innerHTML = `<a href="#" onclick="backToSubjects()">${currentSubject}</a>`;
+                breadcrumb.appendChild(subjectItem);
+            }
+            
+            // Thêm chương
+            if (currentChapter) {
+                const chapterItem = document.createElement('li');
+                chapterItem.className = 'breadcrumb-item active';
+                chapterItem.textContent = currentChapter;
+                breadcrumb.appendChild(chapterItem);
+            }
+            
+            breadcrumb.classList.remove('hidden');
+        }
+
+        // Chọn lớp
+        function selectGrade(grade) {
+            currentGrade = grade;
+            document.getElementById('gradeScreen').classList.add('hidden');
+            document.getElementById('subjectScreen').classList.remove('hidden');
+            loadSubjects();
+            updateBreadcrumb();
+        }
+
+        // Quay lại màn hình chọn lớp
+        function backToGrades() {
+            currentGrade = '';
+            currentSubject = '';
+            currentChapter = '';
+            currentChapterId = '';
+            
+            document.getElementById('gradeScreen').classList.remove('hidden');
+            document.getElementById('subjectScreen').classList.add('hidden');
+            document.getElementById('chapterScreen').classList.add('hidden');
+            document.getElementById('exerciseScreen').classList.add('hidden');
+            document.getElementById('breadcrumb').classList.add('hidden');
+        }
+
+        // Tải danh sách môn học
+        function loadSubjects() {
+            const subjectList = document.getElementById('subjectList');
+            subjectList.innerHTML = '';
+            
+            const subjects = subjectsByGrade[currentGrade];
+            
+            subjects.forEach(subject => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4';
+                
+                const card = document.createElement('div');
+                card.className = 'card nav-card';
+                card.onclick = () => selectSubject(subject);
+                
+                const cardBody = document.createElement('div');
+                cardBody.className = 'card-body text-center';
+                
+                const title = document.createElement('h5');
+                title.className = 'card-title';
+                title.textContent = subject;
+                
+                cardBody.appendChild(title);
+                card.appendChild(cardBody);
+                col.appendChild(card);
+                subjectList.appendChild(col);
+            });
+        }
+
+        // Chọn môn học
+        function selectSubject(subject) {
+            currentSubject = subject;
+            document.getElementById('subjectScreen').classList.add('hidden');
+            document.getElementById('chapterScreen').classList.remove('hidden');
+            document.getElementById('currentChapterTitle').textContent = `Môn: ${subject} - Chọn chương`;
+            loadChapters();
+            updateBreadcrumb();
+        }
+
+        // Quay lại màn hình chọn môn
+        function backToSubjects() {
+            currentSubject = '';
+            currentChapter = '';
+            currentChapterId = '';
+            
+            document.getElementById('subjectScreen').classList.remove('hidden');
+            document.getElementById('chapterScreen').classList.add('hidden');
+            document.getElementById('exerciseScreen').classList.add('hidden');
+            updateBreadcrumb();
+        }
+
+        // Hiển thị modal thêm chương
+        function showAddChapterModal() {
+            document.getElementById('chapterName').value = '';
+            const modal = new bootstrap.Modal(document.getElementById('addChapterModal'));
+            modal.show();
+        }
+
+        // Thêm chương mới
+        async function addNewChapter() {
+            const chapterName = document.getElementById('chapterName').value.trim();
+            if (!chapterName) {
+                alert('Vui lòng nhập tên chương');
+                return;
+            }
+
+            try {
+                // Thêm chương vào Firestore
+                await db.collection('grades').doc(currentGrade)
+                    .collection('subjects').doc(currentSubject)
+                    .collection('chapters').add({
+                        name: chapterName,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                
+                // Đóng modal và tải lại danh sách chương
+                bootstrap.Modal.getInstance(document.getElementById('addChapterModal')).hide();
+                loadChapters();
+            } catch (error) {
+                console.error('Lỗi khi thêm chương:', error);
+                alert('Có lỗi xảy ra khi thêm chương');
+            }
+        }
+
+        // Tải danh sách chương
+        async function loadChapters() {
+            const chapterList = document.getElementById('chapterList');
+            chapterList.innerHTML = '<div class="text-center py-3">Đang tải...</div>';
+
+            try {
+                const snapshot = await db.collection('grades').doc(currentGrade)
+                    .collection('subjects').doc(currentSubject)
+                    .collection('chapters').orderBy('createdAt').get();
+                
+                if (snapshot.empty) {
+                    chapterList.innerHTML = '<div class="text-center py-3">Chưa có chương nào</div>';
+                    return;
+                }
+
+                chapterList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const chapter = doc.data();
+                    const chapterItem = document.createElement('div');
+                    chapterItem.className = 'card mb-2';
+                    chapterItem.innerHTML = `
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <span>${chapter.name}</span>
+                            <button class="btn btn-sm btn-outline-primary" onclick="selectChapter('${doc.id}', '${chapter.name}')">Chọn</button>
+                        </div>
+                    `;
+                    chapterList.appendChild(chapterItem);
+                });
+            } catch (error) {
+                console.error('Lỗi khi tải chương:', error);
+                chapterList.innerHTML = '<div class="text-center py-3 text-danger">Lỗi khi tải danh sách chương</div>';
+            }
+        }
+
+        // Chọn chương
+        function selectChapter(chapterId, chapterName) {
+            currentChapterId = chapterId;
+            currentChapter = chapterName;
+            document.getElementById('chapterScreen').classList.add('hidden');
+            document.getElementById('exerciseScreen').classList.remove('hidden');
+            document.getElementById('currentExerciseTitle').textContent = `Chương: ${chapterName} - Bài tập`;
+            loadExercises();
+            updateBreadcrumb();
+        }
+
+        // Quay lại màn hình chọn chương
+        function backToChapters() {
+            currentChapter = '';
+            currentChapterId = '';
+            
+            document.getElementById('chapterScreen').classList.remove('hidden');
+            document.getElementById('exerciseScreen').classList.add('hidden');
+            updateBreadcrumb();
+        }
+
+        // Tải danh sách bài tập
+        async function loadExercises() {
+            const exerciseList = document.getElementById('exerciseList');
+            exerciseList.innerHTML = '<div class="text-center py-3">Đang tải...</div>';
+
+            try {
+                const snapshot = await db.collection('grades').doc(currentGrade)
+                    .collection('subjects').doc(currentSubject)
+                    .collection('chapters').doc(currentChapterId)
+                    .collection('exercises').orderBy('createdAt').get();
+                
+                if (snapshot.empty) {
+                    exerciseList.innerHTML = '<div class="text-center py-3">Chưa có bài tập nào</div>';
+                    return;
+                }
+
+                exerciseList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const exercise = doc.data();
+                    const exerciseItem = document.createElement('div');
+                    exerciseItem.className = 'card exercise-item';
+                    exerciseItem.innerHTML = `
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6>Câu hỏi:</h6>
+                                    <p>${exercise.question}</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editExercise('${doc.id}', '${exercise.question.replace(/'/g, "\\'")}')">Sửa</button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteExercise('${doc.id}')">Xóa</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    exerciseList.appendChild(exerciseItem);
+                });
+            } catch (error) {
+                console.error('Lỗi khi tải bài tập:', error);
+                exerciseList.innerHTML = '<div class="text-center py-3 text-danger">Lỗi khi tải danh sách bài tập</div>';
+            }
+        }
+
+        // Hiển thị modal thêm bài tập
+        function showAddExerciseModal() {
+            document.getElementById('exerciseModalTitle').textContent = 'Thêm bài tập mới';
+            document.getElementById('exerciseQuestion').value = '';
+            document.getElementById('currentExerciseId').value = '';
+            const modal = new bootstrap.Modal(document.getElementById('exerciseModal'));
+            modal.show();
+        }
+
+        // Hiển thị modal sửa bài tập
+        function editExercise(exerciseId, question) {
+            document.getElementById('exerciseModalTitle').textContent = 'Sửa bài tập';
+            document.getElementById('exerciseQuestion').value = question;
+            document.getElementById('currentExerciseId').value = exerciseId;
+            const modal = new bootstrap.Modal(document.getElementById('exerciseModal'));
+            modal.show();
+        }
+
+        // Lưu bài tập (thêm mới hoặc cập nhật)
+        async function saveExercise() {
+            const question = document.getElementById('exerciseQuestion').value.trim();
+            const exerciseId = document.getElementById('currentExerciseId').value;
+            
+            if (!question) {
+                alert('Vui lòng nhập câu hỏi');
+                return;
+            }
+
+            try {
+                if (exerciseId) {
+                    // Cập nhật bài tập
+                    await db.collection('grades').doc(currentGrade)
+                        .collection('subjects').doc(currentSubject)
+                        .collection('chapters').doc(currentChapterId)
+                        .collection('exercises').doc(exerciseId)
+                        .update({
+                            question: question,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                } else {
+                    // Thêm bài tập mới
+                    await db.collection('grades').doc(currentGrade)
+                        .collection('subjects').doc(currentSubject)
+                        .collection('chapters').doc(currentChapterId)
+                        .collection('exercises').add({
+                            question: question,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                }
+                
+                // Đóng modal và tải lại danh sách bài tập
+                bootstrap.Modal.getInstance(document.getElementById('exerciseModal')).hide();
+                loadExercises();
+            } catch (error) {
+                console.error('Lỗi khi lưu bài tập:', error);
+                alert('Có lỗi xảy ra khi lưu bài tập');
+            }
+        }
+
+        // Xóa bài tập
+        async function deleteExercise(exerciseId) {
+            if (!confirm('Bạn có chắc chắn muốn xóa bài tập này?')) {
+                return;
+            }
+
+            try {
+                await db.collection('grades').doc(currentGrade)
+                    .collection('subjects').doc(currentSubject)
+                    .collection('chapters').doc(currentChapterId)
+                    .collection('exercises').doc(exerciseId)
+                    .delete();
+                
+                loadExercises();
+            } catch (error) {
+                console.error('Lỗi khi xóa bài tập:', error);
+                alert('Có lỗi xảy ra khi xóa bài tập');
+            }
+        }
+    </script>
+</body>
+</html>
