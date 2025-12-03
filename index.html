@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHATBOT HỌC TẬP NÂNG CAO CHẤT LƯỢNG TỰ HỌC</title>
+    <title>CHATBOT HỌC TẬP CHO HỌC SINH TIỂU HỌC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -300,6 +300,7 @@
             position: relative;
             flex-grow: 1;
             min-height: 48px;
+            max-width: calc(100% - 70px);
         }
 
         #o-nhap-tin-nhan {
@@ -319,6 +320,7 @@
             resize: none;
             overflow: hidden;
             background-color: rgba(255, 255, 255, 0.8);
+            box-sizing: border-box;
         }
 
         #o-nhap-tin-nhan:focus {
@@ -342,6 +344,7 @@
             border-radius: 25px;
             font-size: 16px;
             line-height: 1.4;
+            box-sizing: border-box;
         }
 
         #nut-gui {
@@ -359,6 +362,7 @@
             font-size: 24px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             transition: background-color 0.3s ease;
+            flex-shrink: 0;
         }
 
         #nut-gui:hover {
@@ -416,9 +420,33 @@
             font-size: 14px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 1000;
-            display: none;
+            display: block;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #home-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #26a69a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+
+        #home-button:hover {
+            background-color: #2c7873;
         }
 
         @media (max-width: 768px) {
@@ -543,6 +571,7 @@
 
             #o-nhap-tin-nhan-container {
                 min-height: 40px;
+                max-width: calc(100% - 60px);
             }
 
             #o-nhap-tin-nhan, #o-nhap-tin-nhan-preview {
@@ -564,10 +593,22 @@
                 padding: 6px 12px;
                 font-size: 12px;
             }
+
+            #home-button {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+                top: 10px;
+                left: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <button id="home-button" style="display: none;">
+        <i class="fas fa-home"></i>
+    </button>
+
     <div id="visit-counter">
         <i class="fas fa-eye"></i> <span id="visit-count">0</span> lượt truy cập
     </div>
@@ -667,7 +708,7 @@
         </div>
     </div>
 
-    <footer>
+    <footer id="main-footer">
         <div class="footer-line"></div>
         <div class="footer-content">
             <p><i class="fas fa-tree"></i> Ảnh cây đa Tân Trào (nguồn: sưu tầm Internet)</p>
@@ -720,6 +761,8 @@
         const sidebarButtons = document.querySelectorAll('.sidebar-button');
         const visitCounter = document.getElementById('visit-counter');
         const visitCountSpan = document.getElementById('visit-count');
+        const homeButton = document.getElementById('home-button');
+        const mainFooter = document.getElementById('main-footer');
 
         let currentSubject = '';
         let homeworkData = {};
@@ -839,6 +882,8 @@
                 button.addEventListener('click', () => selectSubject(button.dataset.subject));
             });
 
+            homeButton.addEventListener('click', backToHome);
+
             nutGui.addEventListener('click', guiTinNhan);
             
             oNhapTinNhan.addEventListener('keypress', (e) => {
@@ -859,6 +904,14 @@
             
             // Cập nhật số lượt truy cập mỗi 30 giây
             setInterval(getTotalVisits, 30000);
+        }
+
+        function backToHome() {
+            homeMenu.style.display = 'flex';
+            chatbotContainer.style.display = 'none';
+            homeButton.style.display = 'none';
+            visitCounter.style.display = 'block';
+            mainFooter.style.display = 'block';
         }
 
         function adjustTextareaHeight() {
@@ -904,6 +957,9 @@
             chatbotContainer.style.display = 'flex';
             khungTroChuyen.innerHTML = '';
             themTinNhanVaoGiaoDien("bot", `Chào mừng em đến với môn ${subjectFilters[subject].name}! Thầy có thể giúp gì cho em?`);
+            homeButton.style.display = 'flex';
+            visitCounter.style.display = 'none';
+            mainFooter.style.display = 'none';
 
             sidebarButtons.forEach(button => {
                 if (button.dataset.subject === subject) {
