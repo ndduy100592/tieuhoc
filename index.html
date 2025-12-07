@@ -879,7 +879,7 @@
             </div>
             <div id="khu-vuc-nhap">
                 <div id="o-nhap-tin-nhan-container">
-                    <textarea id="o-nhap-tin-nhan" placeholder="Nhập câu hỏi hoặc điều em đang vướng mắc..." rows="1"></textarea>
+                    <textarea id="o-nhap-tin-nhan" placeholder="Nhập câu hỏi của em ..." rows="1"></textarea>
                     <div id="o-nhap-tin-nhan-preview"></div>
                 </div>
                 <button id="nut-gui">
@@ -907,7 +907,7 @@
         import { GoogleGenerativeAI } from "@google/generative-ai";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCyhGASygL5BVBB-0pJJNwoyTZ61pAzP7c",
+            apiKey: "AIzaSyDtEX7XnZ2Lz9w7_KDGZq3kTMjC45Sf4uM",
             authDomain: "tieuhoc-a7f57.firebaseapp.com",
             projectId: "tieuhoc-a7f57",
             storageBucket: "tieuhoc-a7f57.appspot.com",
@@ -918,7 +918,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        const KHOA_API_REVERSED = "YMZZKI_mV0OHMDxiWE65_LsII1E242PuDySazIA"; 
+        const KHOA_API_REVERSED = "AIzaSyDtEX7XnZ2Lz9w7_KDGZq3kTMjC45Sf4uM"; 
         
         function reverseApiKey(reversedKey) {
             return reversedKey.split('').reverse().join('');
