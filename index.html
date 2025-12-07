@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHATBOT HỌC TẬP CHO HỌC SINH TIỂU HỌC</title>
+    <title>CHATBOT HỌC TẬP NÂNG CAO CHẤT LƯỢNG TỰ HỌC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -49,73 +49,75 @@
 
         #home-menu h1 {
             color: #26a69a;
-            margin-bottom: 30px;
-            font-size: 2.5em;
+            margin-bottom: 40px;
+            font-size: 2.8em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px 50px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 2px solid rgba(76, 175, 80, 0.3);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            border: 2px solid rgba(76, 175, 80, 0.4);
         }
 
         .subject-buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            width: 80%;
-            max-width: 900px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            width: 85%;
+            max-width: 1100px;
+            margin-bottom: 35px;
         }
 
         .subject-button {
-            background-color: rgba(76, 175, 80, 0.85);
+            background-color: rgba(76, 175, 80, 0.9);
             color: white;
             border: none;
-            border-radius: 10px;
-            padding: 20px;
-            font-size: 1.2em;
+            border-radius: 12px;
+            padding: 25px 20px;
+            font-size: 1.4em;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            min-height: 140px;
         }
 
         .subject-button i {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            font-size: 3.2em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .subject-button:hover {
-            background-color: rgba(69, 160, 73, 0.95);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            background-color: rgba(56, 142, 60, 0.95);
+            transform: translateY(-7px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.6);
         }
 
         #contact-info {
-            margin-top: 10px;
-            padding: 12px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            width: 60%;
-            max-width: 600px;
-            border: 2px solid rgba(38, 166, 154, 0.3);
+            margin-top: 5px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            width: 65%;
+            max-width: 700px;
+            border: 2px solid rgba(38, 166, 154, 0.4);
             text-align: center;
         }
 
         #contact-info h3 {
             color: #26a69a;
             margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.1em;
+            margin-bottom: 12px;
+            font-size: 1.3em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
@@ -123,31 +125,31 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
-            font-size: 0.9em;
+            margin-bottom: 10px;
+            font-size: 1em;
             color: #333;
             flex-wrap: wrap;
         }
 
         .contact-item i {
             color: #4CAF50;
-            margin-right: 6px;
-            font-size: 1em;
-            width: 18px;
+            margin-right: 8px;
+            font-size: 1.1em;
+            width: 20px;
             text-align: center;
         }
 
         .contact-name {
-            font-weight: 600;
+            font-weight: 700;
             color: #2c7873;
-            margin-right: 5px;
-            font-size: 0.9em;
+            margin-right: 8px;
+            font-size: 1em;
         }
 
         .contact-divider {
-            margin: 0 8px;
+            margin: 0 10px;
             color: #ccc;
-            font-size: 0.9em;
+            font-size: 1em;
         }
 
         footer {
@@ -309,7 +311,7 @@
             position: relative;
             z-index: 1;
             color: transparent;
-            caret-color: black;
+            caret-color: none;
             padding: 12px 18px;
             border: 1px solid #c5e1a5;
             border-radius: 25px;
@@ -409,10 +411,11 @@
             display: inline-block;
         }
 
+        /* THAY ĐỔI: Di chuyển bộ đếm truy cập sang trái */
         #visit-counter {
             position: fixed;
             bottom: 80px;
-            right: 10px;
+            left: 10px; /* Đổi từ right sang left */
             background-color: rgba(38, 166, 154, 0.9);
             color: white;
             padding: 8px 15px;
@@ -423,6 +426,138 @@
             display: block;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* THÊM MỚI: Bộ đếm câu hỏi */
+        #question-counter {
+            position: fixed;
+            bottom: 125px; /* Đặt trên bộ đếm truy cập */
+            left: 10px;
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: block;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* THÊM MỚI: Nút thống kê */
+        #stats-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(156, 39, 176, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        #stats-button:hover {
+            background-color: rgba(123, 31, 162, 0.95);
+            transform: scale(1.1);
+        }
+
+        /* THÊM MỚI: Modal thống kê */
+        #stats-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #stats-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        #stats-content h2 {
+            color: #26a69a;
+            margin-top: 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #stats-content h3 {
+            color: #4CAF50;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .month-stats {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .month-stats h4 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stats-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .stats-value {
+            color: #26a69a;
+            font-weight: 700;
+        }
+
+        #close-stats {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        #close-stats:hover {
+            background-color: #d32f2f;
         }
 
         #home-button {
@@ -451,41 +586,42 @@
 
         @media (max-width: 768px) {
             #home-menu h1 {
-                font-size: 1.8em;
-                margin-bottom: 20px;
-                padding: 15px 25px;
+                font-size: 2em;
+                margin-bottom: 30px;
+                padding: 20px 30px;
             }
 
             .subject-buttons {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-                gap: 15px;
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 20px;
                 width: 95%;
             }
 
             .subject-button {
-                padding: 15px;
-                font-size: 1em;
-                background-color: rgba(76, 175, 80, 0.85);
+                padding: 20px 15px;
+                font-size: 1.2em;
+                background-color: rgba(76, 175, 80, 0.9);
+                min-height: 120px;
             }
 
             .subject-button i {
-                font-size: 2em;
-                margin-bottom: 8px;
+                font-size: 2.5em;
+                margin-bottom: 10px;
             }
 
             #contact-info {
                 width: 95%;
                 margin-top: 10px;
-                padding: 10px;
+                padding: 12px;
                 max-width: none;
             }
             
             #contact-info h3 {
-                font-size: 1em;
+                font-size: 1.1em;
             }
             
             .contact-item {
-                font-size: 0.85em;
+                font-size: 0.9em;
                 flex-direction: column;
                 text-align: center;
                 margin-bottom: 10px;
@@ -494,7 +630,7 @@
             .contact-item i {
                 margin-right: 0;
                 margin-bottom: 5px;
-                font-size: 0.9em;
+                font-size: 1em;
             }
             
             .contact-divider {
@@ -587,11 +723,32 @@
                 margin-left: 10px;
             }
 
+            /* Điều chỉnh cho mobile */
             #visit-counter {
                 bottom: 70px;
-                right: 5px;
+                left: 5px;
                 padding: 6px 12px;
                 font-size: 12px;
+            }
+
+            #question-counter {
+                bottom: 110px;
+                left: 5px;
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            #stats-button {
+                bottom: 15px;
+                right: 15px;
+                width: 55px;
+                height: 55px;
+                font-size: 22px;
+            }
+
+            #stats-content {
+                padding: 20px;
+                width: 95%;
             }
 
             #home-button {
@@ -609,12 +766,36 @@
         <i class="fas fa-home"></i>
     </button>
 
+    <!-- THAY ĐỔI: Thêm bộ đếm câu hỏi -->
+    <div id="question-counter">
+        <i class="fas fa-question-circle"></i> <span id="question-count">0</span> câu hỏi
+    </div>
+
+    <!-- THAY ĐỔI: Di chuyển bộ đếm truy cập sang trái -->
     <div id="visit-counter">
         <i class="fas fa-eye"></i> <span id="visit-count">0</span> lượt truy cập
     </div>
 
+    <!-- THÊM MỚI: Nút thống kê -->
+    <button id="stats-button">
+        <i class="fas fa-chart-bar"></i>
+    </button>
+
+    <!-- THÊM MỚI: Modal thống kê -->
+    <div id="stats-modal">
+        <div id="stats-content">
+            <h2><i class="fas fa-chart-pie"></i> Thống Kê Sử Dụng Chatbot</h2>
+            
+            <div id="monthly-stats-container">
+                <!-- Nội dung thống kê sẽ được thêm vào đây -->
+            </div>
+            
+            <button id="close-stats">Đóng</button>
+        </div>
+    </div>
+
     <div id="home-menu">
-        <h1>CHATBOT HỌC TẬP NÂNG CAO CHẤT LƯỢNG TỰ HỌC</h1>
+        <h1>Chatbot học tập nâng cao chất lượng tự học</h1>
         <div class="subject-buttons">
             <button class="subject-button" data-subject="toan">
                 <i class="fas fa-calculator"></i>
@@ -698,7 +879,7 @@
             </div>
             <div id="khu-vuc-nhap">
                 <div id="o-nhap-tin-nhan-container">
-                    <textarea id="o-nhap-tin-nhan" placeholder="Hỏi tôi điều gì đó..." rows="1"></textarea>
+                    <textarea id="o-nhap-tin-nhan" placeholder="Nhập câu hỏi hoặc điều em đang vướng mắc..." rows="1"></textarea>
                     <div id="o-nhap-tin-nhan-preview"></div>
                 </div>
                 <button id="nut-gui">
@@ -737,17 +918,13 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-
         const KHOA_API_REVERSED = "YMZZKI_mV0OHMDxiWE65_LsII1E242PuDySazIA"; 
         
-
         function reverseApiKey(reversedKey) {
             return reversedKey.split('').reverse().join('');
         }
         
-
         const KHOA_API = reverseApiKey(KHOA_API_REVERSED);
-        
         const moHinhAI = new GoogleGenerativeAI(KHOA_API);
         const moHinh = moHinhAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
@@ -763,10 +940,33 @@
         const visitCountSpan = document.getElementById('visit-count');
         const homeButton = document.getElementById('home-button');
         const mainFooter = document.getElementById('main-footer');
+        
+        // THÊM MỚI: Biến cho bộ đếm câu hỏi
+        const questionCounter = document.getElementById('question-counter');
+        const questionCountSpan = document.getElementById('question-count');
+        
+        // THÊM MỚI: Biến cho nút thống kê
+        const statsButton = document.getElementById('stats-button');
+        const statsModal = document.getElementById('stats-modal');
+        const statsContent = document.getElementById('stats-content');
+        const monthlyStatsContainer = document.getElementById('monthly-stats-container');
+        const closeStats = document.getElementById('close-stats');
 
         let currentSubject = '';
         let homeworkData = {};
         let totalVisits = 0;
+        let totalQuestions = 0;
+
+        // SỬA LỖI: Thêm đối tượng để chuyển đổi mã môn học thành tên hiển thị
+        const subjectDisplayNames = {
+            "toan": "Toán",
+            "tieng-viet": "Tiếng Việt",
+            "tieng-anh": "Tiếng Anh",
+            "tin-hoc": "Tin Học",
+            "cong-nghe": "Công Nghệ",
+            "lich-su-dia-ly": "Lịch Sử & Địa Lý",
+            "khoa-hoc": "Khoa Học"
+        };
 
         const subjectFilters = {
             "toan": {
@@ -813,6 +1013,181 @@
         
         const homeworkRequestPhrases = /(cho (tôi|em) bài tập|xin bài tập|gợi ý bài tập|bài tập về)/;
 
+        // THÊM MỚI: Hàm lưu câu hỏi vào Firebase
+        async function saveQuestion(questionText, subject) {
+            try {
+                const questionData = {
+                    question: questionText,
+                    subject: subject,
+                    subjectName: subjectDisplayNames[subject] || subject, // Lưu cả tên hiển thị
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    monthYear: getCurrentMonthYear()
+                };
+                
+                await db.collection('questions').add(questionData);
+                
+            } catch (error) {
+                console.error("Lỗi khi lưu câu hỏi:", error);
+            }
+        }
+
+        // THÊM MỚI: Hàm lấy tổng số câu hỏi
+        async function getTotalQuestions() {
+            try {
+                const questionsSnapshot = await db.collection('questions').get();
+                totalQuestions = questionsSnapshot.size;
+                questionCountSpan.textContent = totalQuestions.toLocaleString();
+                // CHỈ HIỂN THỊ Ở TRANG CHỦ, KHÔNG HIỂN THỊ KHI CHAT
+                if (homeMenu.style.display !== 'none') {
+                    questionCounter.style.display = 'block';
+                }
+            } catch (error) {
+                console.error("Lỗi khi lấy số câu hỏi:", error);
+            }
+        }
+
+        // THÊM MỚI: Hàm lấy thống kê theo tháng
+        async function getMonthlyStats() {
+            try {
+                const questionsSnapshot = await db.collection('questions').get();
+                const monthlyStats = {};
+                
+                questionsSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const timestamp = data.timestamp;
+                    
+                    if (timestamp) {
+                        const date = timestamp.toDate();
+                        const monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`;
+                        
+                        if (!monthlyStats[monthYear]) {
+                            monthlyStats[monthYear] = {
+                                totalQuestions: 0,
+                                subjects: {}
+                            };
+                        }
+                        
+                        monthlyStats[monthYear].totalQuestions++;
+                        
+                        // SỬA LỖI: Sử dụng tên hiển thị thay vì mã môn học
+                        const subjectKey = data.subject || 'Không xác định';
+                        const subjectName = data.subjectName || subjectDisplayNames[subjectKey] || subjectKey;
+                        
+                        if (!monthlyStats[monthYear].subjects[subjectName]) {
+                            monthlyStats[monthYear].subjects[subjectName] = 0;
+                        }
+                        monthlyStats[monthYear].subjects[subjectName]++;
+                    } else if (data.monthYear) {
+                        const monthYear = data.monthYear;
+                        
+                        if (!monthlyStats[monthYear]) {
+                            monthlyStats[monthYear] = {
+                                totalQuestions: 0,
+                                subjects: {}
+                            };
+                        }
+                        
+                        monthlyStats[monthYear].totalQuestions++;
+                        
+                        // SỬA LỖI: Sử dụng tên hiển thị thay vì mã môn học
+                        const subjectKey = data.subject || 'Không xác định';
+                        const subjectName = data.subjectName || subjectDisplayNames[subjectKey] || subjectKey;
+                        
+                        if (!monthlyStats[monthYear].subjects[subjectName]) {
+                            monthlyStats[monthYear].subjects[subjectName] = 0;
+                        }
+                        monthlyStats[monthYear].subjects[subjectName]++;
+                    }
+                });
+                
+                return monthlyStats;
+                
+            } catch (error) {
+                console.error("Lỗi khi lấy thống kê theo tháng:", error);
+                return {};
+            }
+        }
+
+        // THÊM MỚI: Hàm hiển thị thống kê
+        async function displayMonthlyStats() {
+            const monthlyStats = await getMonthlyStats();
+            monthlyStatsContainer.innerHTML = '';
+            
+            if (Object.keys(monthlyStats).length === 0) {
+                monthlyStatsContainer.innerHTML = '<p>Chưa có dữ liệu thống kê.</p>';
+                return;
+            }
+            
+            // Sắp xếp các tháng theo thứ tự mới nhất trước
+            const sortedMonths = Object.keys(monthlyStats).sort((a, b) => {
+                const [monthA, yearA] = a.split('/').map(Number);
+                const [monthB, yearB] = b.split('/').map(Number);
+                
+                if (yearB !== yearA) return yearB - yearA;
+                return monthB - monthA;
+            });
+            
+            // Hiển thị tổng quát
+            const totalStats = document.createElement('div');
+            totalStats.className = 'month-stats';
+            totalStats.innerHTML = `
+                <h4><i class="fas fa-chart-line"></i> Tổng Quan</h4>
+                <div class="stats-item">
+                    <span class="stats-label">Tổng số câu hỏi:</span>
+                    <span class="stats-value">${totalQuestions.toLocaleString()}</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-label">Tổng lượt truy cập:</span>
+                    <span class="stats-value">${totalVisits.toLocaleString()}</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-label">Số tháng có dữ liệu:</span>
+                    <span class="stats-value">${sortedMonths.length}</span>
+                </div>
+            `;
+            monthlyStatsContainer.appendChild(totalStats);
+            
+            // Hiển thị thống kê từng tháng
+            sortedMonths.forEach(monthYear => {
+                const stats = monthlyStats[monthYear];
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'month-stats';
+                
+                let subjectDetails = '';
+                // SỬA LỖI: Sắp xếp môn học theo số lượng giảm dần
+                const sortedSubjects = Object.entries(stats.subjects).sort((a, b) => b[1] - a[1]);
+                
+                sortedSubjects.forEach(([subjectName, count]) => {
+                    subjectDetails += `
+                        <div class="stats-item">
+                            <span class="stats-label">${subjectName}:</span>
+                            <span class="stats-value">${count}</span>
+                        </div>
+                    `;
+                });
+                
+                monthDiv.innerHTML = `
+                    <h4><i class="fas fa-calendar-alt"></i> Tháng ${monthYear}</h4>
+                    <div class="stats-item">
+                        <span class="stats-label">Tổng câu hỏi:</span>
+                        <span class="stats-value">${stats.totalQuestions}</span>
+                    </div>
+                    ${sortedSubjects.length > 0 ? `
+                    <h5 style="margin-top: 15px; margin-bottom: 10px; color: #666;">Phân bổ theo môn học:</h5>
+                    ${subjectDetails}
+                    ` : '<p style="color: #666; margin-top: 10px;">Không có dữ liệu phân bổ môn học</p>'}
+                `;
+                
+                monthlyStatsContainer.appendChild(monthDiv);
+            });
+        }
+
+        // THÊM MỚI: Hàm lấy tháng/năm hiện tại
+        function getCurrentMonthYear() {
+            const now = new Date();
+            return `${now.getMonth() + 1}/${now.getFullYear()}`;
+        }
+
         async function trackVisit() {
             try {
                 const visitData = {
@@ -823,7 +1198,6 @@
                     platform: navigator.platform
                 };
                 
-                // Thêm lượt truy cập mới
                 await db.collection('visits').add(visitData);
                 
             } catch (error) {
@@ -836,7 +1210,10 @@
                 const visitsSnapshot = await db.collection('visits').get();
                 totalVisits = visitsSnapshot.size;
                 visitCountSpan.textContent = totalVisits.toLocaleString();
-                visitCounter.style.display = 'block';
+                // CHỈ HIỂN THỊ Ở TRANG CHỦ, KHÔNG HIỂN THỊ KHI CHAT
+                if (homeMenu.style.display !== 'none') {
+                    visitCounter.style.display = 'block';
+                }
             } catch (error) {
                 console.error("Lỗi khi lấy số lượt truy cập:", error);
             }
@@ -898,19 +1275,42 @@
                 adjustTextareaHeight();
             });
 
+            // THÊM MỚI: Xử lý nút thống kê
+            statsButton.addEventListener('click', () => {
+                statsModal.style.display = 'flex';
+                displayMonthlyStats();
+            });
+
+            closeStats.addEventListener('click', () => {
+                statsModal.style.display = 'none';
+            });
+
+            // Đóng modal khi click ra ngoài
+            statsModal.addEventListener('click', (e) => {
+                if (e.target === statsModal) {
+                    statsModal.style.display = 'none';
+                }
+            });
+
             // Theo dõi lượt truy cập khi trang được tải
             trackVisit();
             getTotalVisits();
+            getTotalQuestions();
             
-            // Cập nhật số lượt truy cập mỗi 30 giây
-            setInterval(getTotalVisits, 30000);
+            // Cập nhật số lượt truy cập và câu hỏi mỗi 30 giây
+            setInterval(() => {
+                getTotalVisits();
+                getTotalQuestions();
+            }, 30000);
         }
 
         function backToHome() {
             homeMenu.style.display = 'flex';
             chatbotContainer.style.display = 'none';
             homeButton.style.display = 'none';
+            statsButton.style.display = 'flex'; // HIỂN THỊ NÚT THỐNG KÊ Ở TRANG CHỦ
             visitCounter.style.display = 'block';
+            questionCounter.style.display = 'block'; // HIỂN THỊ BỘ ĐẾM CÂU HỎI Ở TRANG CHỦ
             mainFooter.style.display = 'block';
         }
 
@@ -958,7 +1358,9 @@
             khungTroChuyen.innerHTML = '';
             themTinNhanVaoGiaoDien("bot", `Chào mừng em đến với môn ${subjectFilters[subject].name}! Thầy có thể giúp gì cho em?`);
             homeButton.style.display = 'flex';
+            statsButton.style.display = 'none'; // ẨN NÚT THỐNG KÊ KHI CHAT
             visitCounter.style.display = 'none';
+            questionCounter.style.display = 'none'; // ẨN BỘ ĐẾM CÂU HỎI KHI CHAT
             mainFooter.style.display = 'none';
 
             sidebarButtons.forEach(button => {
@@ -988,6 +1390,13 @@
             if (!tinNhanNguoiDung) return;
 
             themTinNhanVaoGiaoDien("nguoi-dung", tinNhanNguoiDung);
+            
+            // THÊM MỚI: Lưu câu hỏi vào Firebase và cập nhật bộ đếm
+            if (currentSubject) {
+                await saveQuestion(tinNhanNguoiDung, currentSubject);
+                await getTotalQuestions(); // Cập nhật số câu hỏi ngay lập tức
+            }
+            
             oNhapTinNhan.value = '';
             oNhapTinNhanPreview.innerHTML = '';
             adjustTextareaHeight();
@@ -1042,10 +1451,12 @@
             }
             return true;
         }
+
         function laYeuCauGiaiBaiTap(cauHoi) {
             const cauHoiThuong = cauHoi.toLowerCase();
             return homeworkRequestPhrases.test(cauHoiThuong);
         }
+
         loadHomeworkData();
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
